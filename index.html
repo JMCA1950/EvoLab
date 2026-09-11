@@ -1,0 +1,1916 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EvoLab V1.13.6 - Encabezado repetido</title>
+<style>
+:root{--a:#315f69;--a2:#3f7884;--bg:#edf1f2;--line:#d7e0e2;--ok:#e7f3ea;--warn:#fff3d9;--bad:#fde8e8;--txt:#202a30;--muted:#69767c}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--txt)}
+header{background:var(--a);color:#fff}.wrap{max-width:1220px;margin:auto;padding:18px}h1{margin:0;font-size:25px}.sub{margin-top:4px;opacity:.9}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0}.drop{border:2px dashed #a4b6bc;border-radius:10px;padding:22px;text-align:center;background:#fbfcfc}
+button{background:var(--a);color:#fff;border:0;border-radius:8px;padding:9px 14px;font-weight:700;cursor:pointer}
+.hidden{display:none}.muted{font-size:11px;color:var(--muted)}.status{padding:9px 11px;border-radius:8px;margin:8px 0;font-size:12px}
+.ok{background:var(--ok)}.warn{background:var(--warn)}.bad{background:var(--bad)}
+.metrics{display:grid;grid-template-columns:repeat(6,1fr);gap:9px}.metric{border:1px solid var(--line);border-radius:9px;padding:11px;background:#fff}.metric .n{font-size:23px;font-weight:700;color:var(--a)}.metric .t{font-size:10px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:11px}th,td{border:1px solid var(--line);padding:6px;text-align:left;vertical-align:top}th{background:#eef3f4}
+.study{border:1px solid var(--line);border-radius:10px;margin:14px 0;overflow:hidden}.studyhead{padding:10px 12px;background:#eef3f4;font-weight:700}
+.tag{display:inline-block;padding:3px 7px;border-radius:999px;font-size:9px;font-weight:700}.tag.ok{color:#2e6541}.tag.warn{color:#735e1c}.tag.bad{color:#8a3232}.tag.iso{color:#425b66}
+.raw{font-family:Consolas,monospace;font-size:9px;color:#59666b}.diag{font-family:Consolas,monospace;font-size:10px;white-space:pre-wrap;background:#f7f9fa;border:1px solid var(--line);border-radius:8px;padding:10px;overflow:auto}.diagrow{margin:2px 0}.hit{font-weight:700}.progress{height:8px;background:#dbe3e5;border-radius:999px;overflow:hidden;margin-top:10px}.bar{height:100%;width:0;background:var(--a)}
+.cover{height:8px;background:#e5ebed;border-radius:999px;overflow:hidden}.cover>div{height:100%;background:var(--a)}
+
+.longitudinal{margin-top:18px}
+.longitudinal h2{margin:0 0 8px}
+.longitudinal table{font-size:11px}
+.longitudinal th,.longitudinal td{text-align:center;vertical-align:middle}
+.longitudinal th:first-child,.longitudinal td:first-child{text-align:left;min-width:170px}
+.trendCell{font-size:25px;font-weight:700;width:74px;text-align:center!important}
+.trendMeta{font-size:9px;color:var(--muted);margin-top:2px}
+.currentCol{background:#f6f0d9}
+@page{size:A4 portrait;margin:11mm}
+@media print{
+  body{background:#fff}
+  header{background:#fff;color:#000;border-bottom:1px solid #bbb}
+  .drop,#pb,#metrics,.study,.status.internal{display:none!important}
+  .wrap{max-width:none;padding:0}
+  .card{border:0;margin:0;padding:8px 0}
+  .longitudinal table{font-size:9.5pt}
+  .trendCell{font-size:18pt}
+}
+
+@media(max-width:850px){.metrics{grid-template-columns:repeat(2,1fr)}}
+
+.medicalMode #studies{display:none}
+.medicalMode .longitudinal h2{font-size:22px}
+.medicalMode .longitudinal .status{font-size:10px}
+@media print{#studies,#metrics,.drop,#pb{display:none!important}.longitudinal{margin-top:0}.longitudinal .status{display:none!important}.longitudinal table{font-size:8.8pt}}
+
+.appHero{background:linear-gradient(120deg,var(--a),var(--a2));color:#fff;border-radius:0 0 22px 22px}
+.heroGrid{display:grid;grid-template-columns:1.15fr .95fr;gap:28px;align-items:center}
+.brandLine{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.brandLine h1{font-size:40px;letter-spacing:-1px}
+.heroVersion{font-size:20px;font-weight:700}
+.heroNumber{font-size:22px;font-weight:800;margin-top:32px}
+.heroPurpose{font-size:16px;margin-top:20px}
+.heroCredit{font-size:14px;margin-top:12px}
+.heroNotice{background:#fff;color:var(--txt);border-radius:14px;padding:18px 20px;line-height:1.5}
+.aboutGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.infoBox{border:1px solid var(--line);border-radius:11px;padding:12px;background:#fbfcfd}
+.infoBox .lbl{font-size:11px;color:var(--muted);margin-bottom:6px}
+.infoBox .val{font-size:13px;font-weight:700}
+.sisterBox{margin-top:18px;border:1px solid var(--line);border-radius:12px;padding:15px;background:#f7f9fc}
+.sisterBox h3{margin:0 0 8px;font-size:16px}
+.sisterLink{font-weight:800;color:#0000EE;text-decoration:underline}
+.sisterLink:hover{color:#551A8B;text-decoration:underline}
+.sisterLink.pending{cursor:default;text-decoration:none}
+.appFooter{max-width:1220px;margin:8px auto 18px;padding:14px 18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:18px;font-size:11px;color:var(--muted)}
+.screenOnly{display:block}
+.printOnly{display:none}
+@media(max-width:760px){
+ .heroGrid,.aboutGrid{grid-template-columns:1fr}
+ .brandLine h1{font-size:32px}
+ .heroNumber{margin-top:20px}
+}
+@media print{
+ .screenOnly,.appHero,.appFooter,#aboutEvoLab{display:none!important}
+ .printOnly{display:block!important}
+}
+
+
+.actionGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.actionBox{border:1px solid var(--line);border-radius:12px;padding:15px;background:#fbfcfd}
+.actionBox h3{margin:0 0 8px;font-size:16px}
+.actionBox p{font-size:13px;line-height:1.45;margin:0 0 10px}
+.actionLine{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.actionValue{flex:1;min-width:220px;background:#f4f6f7;border:1px solid var(--line);border-radius:8px;padding:9px 10px;font:12px ui-monospace,SFMono-Regular,Consolas,monospace;overflow:auto}
+.actionBtn{border:0;border-radius:8px;padding:9px 12px;background:var(--a);color:#fff;font-weight:700;cursor:pointer}
+.actionBtn:disabled{opacity:.55;cursor:not-allowed}
+.actionHint{font-size:11px;color:var(--muted);margin-top:8px}
+.copyStatus{font-size:11px;color:var(--a);min-height:16px;margin-top:6px}
+@media(max-width:760px){.actionGrid{grid-template-columns:1fr}}
+
+
+/* V1.12.0 · prueba del papel */
+.printReportFooter{display:none}
+@media print{
+ html,body{background:#fff!important;color:#111!important;font-family:Arial,Helvetica,sans-serif!important}
+ .screenOnly,.appHero,.appFooter,#aboutEvoLab,.devOnly,.drop,#pb,#metrics,#studies,#longitudinal{display:none!important}
+ .printOnly{display:block!important}
+ .wrap{max-width:none!important;margin:0!important;padding:0!important}
+ .card.medReport{box-shadow:none!important;border:0!important;border-radius:0!important;padding:0!important;margin:0!important}
+ .medHead{border-bottom:1px solid #777!important;padding:0 0 7mm!important;margin:0 0 5mm!important}
+ .medTitle{font-size:17pt!important}.medSubtitle{font-size:10pt!important;color:#333!important}
+ .medMeta{grid-template-columns:1.25fr 1fr!important;gap:1.5mm 8mm!important;margin-top:4mm!important;font-size:8.5pt!important}
+ .medSection{margin:0 0 6mm!important;break-inside:auto!important}
+ .medSection h3{font-size:10.5pt!important;margin:0 0 2mm!important;padding-bottom:1.5mm!important;break-after:avoid!important}
+ .medTable{width:100%!important;table-layout:fixed!important;font-size:8.2pt!important}
+ .medTable thead{display:table-header-group!important}
+ .medTable tr{break-inside:avoid!important}
+ .medTable th,.medTable td{padding:1.7mm 1.2mm!important;line-height:1.18!important}
+ .medTable th:first-child,.medTable td:first-child{width:27%!important;min-width:0!important}
+ .medTable th:last-child,.medTable td:last-child{width:8%!important}
+ .paramName{font-size:8.3pt!important}.paramMeta{font-size:6.8pt!important;color:#444!important}
+ .currentMed{background:#efefef!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+ .trendMed{font-size:14pt!important}.trendMed small{font-size:5.8pt!important}
+ .medNote{font-size:6.8pt!important;line-height:1.25!important;color:#333!important}
+ .printReportFooter{display:flex!important;position:fixed!important;left:10mm;right:10mm;bottom:4mm;border-top:.5pt solid #999;padding-top:1.5mm;justify-content:space-between;font-size:6.8pt;color:#444}
+}
+
+
+.vfrLegend{font-size:9px;color:var(--muted);margin:0 0 8px}
+.vfrTag{display:inline-block;margin-left:3px;font-size:7px;font-weight:800;letter-spacing:.15px;vertical-align:super;color:#333}
+@media print{.vfrLegend{font-size:6.5pt!important;color:#333!important;margin-bottom:2mm!important}.vfrTag{font-size:7pt!important;color:#111!important}}
+
+
+
+.groupRow td{
+  font-weight:800!important;
+  background:#e9f2f3!important;
+  color:#173a3d!important;
+  text-align:left!important;
+  padding:7px 9px!important;
+  letter-spacing:.1px;
+  border-top:2px solid #9fbec1!important;
+}
+
+/* V1.12.8 — Hoja de impresión única y autoritativa.
+   Ctrl+P imprime solamente el informe longitudinal. */
+@media print {
+  html, body {
+    background:#fff!important;
+    color:#111!important;
+    margin:0!important;
+    padding:0!important;
+    font-family:Arial,Helvetica,sans-serif!important;
+  }
+
+  /* Ocultar todo lo que no es el informe. */
+  body > header,
+  body > footer,
+  body > .printReportFooter {
+    display:none!important;
+  }
+  body > .wrap {
+    display:block!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:0!important;
+  }
+  body > .wrap > * {
+    display:none!important;
+  }
+  body > .wrap > #out {
+    display:block!important;
+    margin:0!important;
+    padding:0!important;
+    border:0!important;
+    box-shadow:none!important;
+  }
+
+  /* Dentro de Resultado, imprimir sólo el informe longitudinal. */
+  #out > * {
+    display:none!important;
+  }
+  #out > #longitudinal {
+    display:block!important;
+    margin:0!important;
+    padding:0!important;
+  }
+
+  #longitudinal,
+  #longitudinal .card.longitudinal {
+    display:block!important;
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:0!important;
+    border:0!important;
+    border-radius:0!important;
+    box-shadow:none!important;
+    background:#fff!important;
+  }
+
+  #longitudinal h2 {
+    display:block!important;
+    font-size:15pt!important;
+    margin:0 0 3mm!important;
+  }
+
+  /* Mensajes técnicos no se imprimen. */
+  #longitudinal .status {
+    display:none!important;
+  }
+  #longitudinal .muted,
+  #longitudinal .vfrLegend {
+    display:block!important;
+    font-size:6.7pt!important;
+    line-height:1.2!important;
+    color:#333!important;
+    margin:0 0 2mm!important;
+  }
+
+  #longitudinal table {
+    display:table!important;
+    width:100%!important;
+    border-collapse:collapse!important;
+    table-layout:fixed!important;
+    font-size:10pt!important;
+    margin:0!important;
+  }
+  #longitudinal thead {
+    display:table-header-group!important;
+  }
+  #longitudinal tbody {
+    display:table-row-group!important;
+  }
+  #longitudinal tr {
+    display:table-row!important;
+    break-inside:avoid!important;
+    page-break-inside:avoid!important;
+  }
+  #longitudinal th,
+  #longitudinal td {
+    display:table-cell!important;
+    border:.45pt solid #999!important;
+    padding:1.6mm 1.1mm!important;
+    line-height:1.16!important;
+    vertical-align:middle!important;
+    overflow-wrap:anywhere!important;
+  }
+  #longitudinal th:first-child,
+  #longitudinal td:first-child {
+    width:22%!important;
+    min-width:0!important;
+    text-align:left!important;
+  }
+  #longitudinal th:last-child,
+  #longitudinal td:last-child {
+    width:8%!important;
+    min-width:0!important;
+  }
+
+  #longitudinal .groupRow td{
+    background:#e7eeee!important;
+    color:#111!important;
+    font-size:10.2pt!important;
+    font-weight:800!important;
+    text-align:left!important;
+    padding:1.7mm 1.2mm!important;
+    border-top:1pt solid #777!important;
+    border-bottom:.5pt solid #999!important;
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+  }
+
+  #longitudinal .trendCell {
+    width:auto!important;
+    font-size:12pt!important;
+    text-align:center!important;
+  }
+  #longitudinal .trendMeta {
+    font-size:5.7pt!important;
+    line-height:1.05!important;
+  }
+  #longitudinal .currentCol {
+    background:#efefef!important;
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+  }
+  #longitudinal .vfrTag {
+    font-size:7pt!important;
+  }
+}
+
+
+@media print {
+  #longitudinal thead { display:table-header-group!important; }
+  #longitudinal tfoot { display:table-footer-group!important; }
+
+  /* Mantener cada fila completa y evitar que un título de grupo quede huérfano. */
+  #longitudinal tr { break-inside:avoid!important; page-break-inside:avoid!important; }
+  #longitudinal .groupRow { break-after:avoid-page!important; page-break-after:avoid!important; }
+}
+
+
+@media print{
+  #longitudinal tbody.reportGroup{
+    break-inside:avoid-page!important;
+    page-break-inside:avoid!important;
+  }
+  #longitudinal tbody.reportGroup tr{
+    break-inside:avoid!important;
+    page-break-inside:avoid!important;
+  }
+  #longitudinal .groupRow{
+    break-after:avoid-page!important;
+    page-break-after:avoid!important;
+  }
+}
+#printHelp{font-size:12px;color:#53606a}
+@media print{#printHelp{display:none!important}}
+
+
+.medicalReportHeader{
+  margin:0 0 12px;
+  padding:0 0 10px;
+  border-bottom:1px solid #b8c8ca;
+}
+.medicalBrand{
+  font-size:23px;
+  line-height:1;
+  font-weight:800;
+  color:#174e53;
+  letter-spacing:.2px;
+}
+.medicalTitle{
+  margin-top:4px;
+  font-size:17px;
+  font-weight:800;
+  color:#1d2c2e;
+}
+.medicalMetaGrid{
+  display:grid;
+  grid-template-columns:2fr 1.3fr .8fr;
+  gap:8px;
+  margin-top:10px;
+}
+.medicalMetaGrid>div{
+  padding:7px 8px;
+  background:#f4f7f7;
+  border:1px solid #d8e1e2;
+  border-radius:7px;
+}
+.medicalMetaGrid span,
+.medicalDatesLabel{
+  display:block;
+  font-size:11px;
+  color:#5d6a6c;
+  margin-bottom:2px;
+}
+.medicalMetaGrid b{font-size:13px;color:#172426}
+.medicalDatesLabel{margin-top:9px;font-weight:700}
+.medicalDatesRow{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+}
+.medicalDatesRow span{
+  display:inline-block;
+  padding:4px 7px;
+  border:1px solid #cfdadb;
+  border-radius:6px;
+  background:#fff;
+  font-size:11px;
+  font-weight:700;
+}
+.medicalDatesRow .currentDate{
+  background:#e7eeee;
+  border-color:#9fbec1;
+}
+.medicalLegend{
+  margin-top:8px;
+  font-size:11px;
+  line-height:1.3;
+  color:#435154;
+}
+@media print{
+  #longitudinal .medicalReportHeader{
+    display:block!important;
+    margin:0 0 3mm!important;
+    padding:0 0 2.5mm!important;
+    border-bottom:.6pt solid #999!important;
+  }
+  #longitudinal .medicalBrand{
+    font-size:14.5pt!important;
+    color:#111!important;
+  }
+  #longitudinal .medicalTitle{
+    margin-top:.8mm!important;
+    font-size:11.5pt!important;
+    color:#111!important;
+  }
+  #longitudinal .medicalMetaGrid{
+    display:grid!important;
+    grid-template-columns:2fr 1.2fr .7fr!important;
+    gap:2mm!important;
+    margin-top:2.5mm!important;
+  }
+  #longitudinal .medicalMetaGrid>div{
+    padding:1.2mm 1.5mm!important;
+    background:#fff!important;
+    border:.45pt solid #bbb!important;
+    border-radius:0!important;
+  }
+  #longitudinal .medicalMetaGrid span,
+  #longitudinal .medicalDatesLabel{
+    font-size:7.2pt!important;
+    color:#444!important;
+    margin-bottom:.4mm!important;
+  }
+  #longitudinal .medicalMetaGrid b{
+    font-size:8.2pt!important;
+    color:#111!important;
+  }
+  #longitudinal .medicalDatesLabel{
+    margin-top:2mm!important;
+    font-weight:700!important;
+  }
+  #longitudinal .medicalDatesRow{
+    display:flex!important;
+    gap:1.2mm!important;
+    flex-wrap:wrap!important;
+  }
+  #longitudinal .medicalDatesRow span{
+    padding:.8mm 1.2mm!important;
+    border:.4pt solid #bbb!important;
+    border-radius:0!important;
+    background:#fff!important;
+    font-size:7.4pt!important;
+    font-weight:700!important;
+  }
+  #longitudinal .medicalDatesRow .currentDate{
+    background:#e7eeee!important;
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+  }
+  #longitudinal .medicalLegend{
+    margin-top:1.6mm!important;
+    font-size:7.2pt!important;
+    line-height:1.2!important;
+    color:#333!important;
+  }
+  #longitudinal .screenTrendNote{display:none!important}
+}
+
+
+@media print{
+  #longitudinal .vrMeta{
+    font-size:8pt!important;
+    line-height:1.08!important;
+  }
+}
+
+
+.repeatReportHeader{display:none;}
+@media print{
+  .medicalMetaGrid{display:none!important;}
+  #longitudinal .repeatReportHeader{
+    display:table-cell!important;
+    padding:1.5mm 1.2mm!important;
+    background:#fff!important;
+    border:0!important;
+    border-bottom:.6pt solid #9aa!important;
+    text-align:left!important;
+  }
+  #longitudinal .repeatMetaGrid{
+    display:grid!important;
+    grid-template-columns:1.5fr 1fr .7fr!important;
+    gap:4mm!important;
+    width:100%!important;
+    font-size:8.6pt!important;
+    line-height:1.15!important;
+  }
+  #longitudinal .repeatMetaGrid span{
+    display:block!important;
+    font-size:7pt!important;
+    font-weight:600!important;
+    color:#526065!important;
+    margin-bottom:.4mm!important;
+  }
+  #longitudinal .repeatMetaGrid b{
+    display:block!important;
+    font-size:9pt!important;
+    color:#111!important;
+  }
+}
+
+</style>
+</head>
+<body class="medicalMode">
+<header class="appHero screenOnly"><div class="wrap heroGrid">
+  <div>
+    <div class="brandLine"><h1>EvoLab</h1><div class="heroVersion">V1.13.6 — Encabezado repetido</div></div>
+    <div class="heroNumber">01</div>
+    <div class="heroPurpose">Evolución histórica de resultados de laboratorio</div>
+    <div class="heroCredit">Desarrollado por José María Condomí Alcorta y Data (ChatGPT)</div>
+  </div>
+  <div class="heroNotice">
+    Esta aplicación organiza resultados de distintos estudios para facilitar su lectura histórica.
+    <b>No realiza diagnósticos ni reemplaza la valoración del profesional tratante.</b>
+  </div>
+</div></header>
+
+<div class="wrap">
+<div class="card">
+<h2 style="margin-top:0">Prueba técnica</h2>
+<div class="status ok"><b>Motor validado:</b> el estudio patrón del 07/03/2026 alcanzó 41/41 determinaciones reconocidas (100% de cobertura). Esta pantalla vuelve a priorizar una lectura simple para el usuario.</div>
+<div class="status ok"><b>Objetivo:</b> construir automáticamente la tabla longitudinal con todos los estudios comparables seleccionados y calcular la columna <b>Tendencia</b>.</div>
+<div class="status"><b>Impresión:</b> hasta 3 estudios, A4 vertical; con 4 o más, A4 horizontal.</div>
+<div class="status"><b>Control de extracción:</b> los rangos de referencia numéricos quedan bloqueados como contexto y un parámetro ya no puede “tomar prestado” el valor de la fila siguiente.</div>
+<div class="status ok"><b>Principio de tendencia:</b> <i>La tendencia describe cómo se mueve el parámetro; el valor de referencia describe dónde se encuentra.</i> Se mantiene la lógica validada de estabilidad, meseta y retorno al nivel.</div>
+<div class="status"><b>Blindaje administrativo:</b> DNI, protocolo, número de orden, socio/afiliado y otros identificadores se excluyen antes de que puedan convertirse en resultados.</div>
+<div class="status ok"><b>Identidad V1.10.5:</b> <i>identidad no legible ≠ paciente diferente</i>. Un estudio sin nombre/DNI extraíbles se incorpora provisoriamente con aviso de control; solo una identidad fiable e incompatible provoca exclusión automática.</div>
+<div class="drop">
+Cargue uno o varios de los informes patrón.<br><br>
+<input id="files" type="file" accept="application/pdf" multiple>
+<div style="margin-top:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+  <button id="go">Analizar estructura</button>
+  <button id="printBtn" type="button">Imprimir / Guardar PDF</button>
+  <span class="muted">Alternativa: Ctrl+P</span>
+  <span id="printHelp">Para numerar las hojas: en Chrome, Más ajustes → activar “Encabezados y pies de página”.</span>
+</div>
+</div>
+<div id="pb" class="hidden"><div class="progress"><div id="bar" class="bar"></div></div><div id="pt" class="muted" style="margin-top:6px"></div></div>
+</div>
+
+<div id="metrics" class="metrics hidden">
+<div class="metric"><div id="mf" class="n">0</div><div class="t">archivos</div></div>
+<div class="metric"><div id="md" class="n">0</div><div class="t">resultados incorporados</div></div>
+<div class="metric"><div id="mn" class="n">0</div><div class="t">parámetros reconocidos</div></div>
+<div class="metric"><div id="mu" class="n">0</div><div class="t">parámetro nuevo</div></div>
+<div class="metric"><div id="mc" class="n">0%</div><div class="t">cobertura patrón</div></div>
+<div class="metric"><div id="mx" class="n">0</div><div class="t">estudios excluidos</div></div>
+</div>
+
+<div id="out" class="card hidden">
+<h2 style="margin-top:0">Resultado</h2>
+<div id="global"></div>
+
+<div id="reportIntro" class="card"><h2>Informe EvoLab</h2><div class="status ok"><b>Lectura médica:</b> los resultados se presentan cronológicamente; la última columna corresponde a la situación actual y la columna Tendencia resume el comportamiento histórico reciente.</div><div class="muted">La tendencia es descriptiva: no constituye diagnóstico, pronóstico ni proyección.</div></div><div id="longitudinal"></div><div id="studies"></div>
+
+
+</div>
+<section id="aboutEvoLab" class="card screenOnly">
+  <h2 style="margin-top:0">Acerca de EvoLab</h2>
+  <p><b>EvoLab</b> es una aplicación desarrollada íntegramente por <b>José María Condomí Alcorta y Data (ChatGPT)</b>.</p>
+  <p>Su objetivo es reunir resultados de laboratorio de distintos estudios y organizarlos cronológicamente para facilitar la lectura de su evolución histórica y de la situación actual.</p>
+  <p>Un análisis aislado es un <b>fotograma</b>. EvoLab reúne sucesivos estudios para ayudar a ver la <b>película</b> de la evolución de los parámetros de laboratorio.</p>
+  <p><b>Principio rector: información de fácil lectura.</b> La aplicación organiza y describe la información; no diagnostica, no prescribe y no reemplaza el criterio médico.</p>
+
+  <div class="aboutGrid">
+    <div class="infoBox"><div class="lbl">Versión</div><div class="val">1.13.6 — Informe médico · encabezado repetido</div></div>
+    <div class="infoBox"><div class="lbl">Desarrolladores</div><div class="val">José María Condomí Alcorta y Data (ChatGPT)</div></div>
+    <div class="infoBox"><div class="lbl">Tecnologías</div><div class="val">HTML, CSS y JavaScript</div></div>
+    <div class="infoBox"><div class="lbl">Enfoque</div><div class="val">Evolución histórica + situación actual</div></div>
+    <div class="infoBox"><div class="lbl">Licencia</div><div class="val">Todos los derechos reservados</div></div>
+  </div>
+
+  <div class="sisterBox">
+    <h3>También desarrollamos <a id="cardioLink" class="sisterLink pending" aria-disabled="true">CardioRegistro</a></h3>
+    <div style="font-size:13px;line-height:1.45">Organiza el registro domiciliario de presión arterial, permite visualizar su evolución y generar informes para la consulta médica.</div>
+  </div>
+
+  <div class="actionGrid">
+    <div class="actionBox">
+      <h3>Compartir</h3>
+      <p>Si desea compartir EvoLab con otra persona, puede hacerlo enviándole el siguiente enlace. Quien lo reciba solo deberá abrirlo y elegir la opción <b>Instalar</b> para incorporar la aplicación a su dispositivo.</p>
+      <div class="actionLine">
+        <div id="shareValue" class="actionValue">Enlace pendiente de publicación</div>
+        <button id="copyShareBtn" class="actionBtn" type="button" disabled>Copiar enlace</button>
+      </div>
+      <div id="shareStatus" class="copyStatus"></div>
+    </div>
+
+    <div class="actionBox">
+      <h3>Colaboración voluntaria</h3>
+      <p>Si considera que EvoLab le resulta útil y desea colaborar con su desarrollo, puede hacerlo mediante una contribución completamente voluntaria a través del siguiente alias de Mercado Pago:</p>
+      <div class="actionLine">
+        <div id="aliasValue" class="actionValue">jmcondomialcorta.mp</div>
+        <button id="copyAliasBtn" class="actionBtn" type="button">Copiar alias</button>
+      </div>
+      <div class="actionHint">La colaboración es totalmente opcional. Todas las funciones de EvoLab permanecen habilitadas independientemente de que decida colaborar o no.</div>
+      <div id="aliasStatus" class="copyStatus"></div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer class="appFooter screenOnly">
+  <div><b>EvoLab</b> · Evolución histórica de laboratorio</div>
+  <div>José María Condomí Alcorta y Data (ChatGPT) · V1.13.6</div>
+</footer>
+
+<div class="printReportFooter"><span>EvoLab · Informe de Evolución Histórica de Laboratorio</span><span>Documento para consulta médica</span></div>
+
+<script>
+/* Impresión independiente del motor PDF.js.
+   Si el entorno de vista previa bloquea window.print(), Ctrl+P usa exactamente
+   la misma hoja CSS. */
+(function(){
+  function countStudiesFromReport(){
+    var table=document.querySelector("#longitudinal table");
+    if(!table || !table.tHead || !table.tHead.rows.length) return 0;
+    var n=table.tHead.rows[0].cells.length - 2; /* parámetro + tendencia */
+    return Math.max(0,n);
+  }
+  function applyPrintOrientation(){
+    var n=countStudiesFromReport();
+    var style=document.getElementById("evolabPrintPage");
+    if(!style){
+      style=document.createElement("style");
+      style.id="evolabPrintPage";
+      document.head.appendChild(style);
+    }
+    style.textContent = n>=5
+      ? "@page{size:A4 landscape;margin:9mm 8mm 11mm}"
+      : "@page{size:A4 portrait;margin:10mm 9mm 12mm}";
+  }
+  window.addEventListener("beforeprint", applyPrintOrientation);
+  document.addEventListener("DOMContentLoaded",function(){
+    var b=document.getElementById("printBtn");
+    if(b){
+      b.addEventListener("click",function(){
+        applyPrintOrientation();
+        window.print();
+      });
+    }
+  });
+  window.evoApplyPrintOrientation=applyPrintOrientation;
+})();
+</script>
+
+<script type="module">
+import * as pdfjsLib from "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs";
+pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs";
+const $=x=>document.getElementById(x);
+const CARDIOREGISTRO_URL = "https://jmca1950.github.io/CardioRepositorio/";
+const EVOLAB_SHARE_URL = ""; // completar al publicar EvoLab
+const MERCADOPAGO_ALIAS = "jmcondomialcorta.mp";
+
+const cardioLink=document.getElementById("cardioLink");
+if(cardioLink && CARDIOREGISTRO_URL){
+  cardioLink.href=CARDIOREGISTRO_URL;
+  cardioLink.classList.remove("pending");
+  cardioLink.removeAttribute("aria-disabled");
+  cardioLink.target="_blank";
+  cardioLink.rel="noopener";
+}
+
+const shareValue=document.getElementById("shareValue");
+const copyShareBtn=document.getElementById("copyShareBtn");
+const shareStatus=document.getElementById("shareStatus");
+const aliasValue=document.getElementById("aliasValue");
+const copyAliasBtn=document.getElementById("copyAliasBtn");
+const aliasStatus=document.getElementById("aliasStatus");
+
+async function copyText(text,statusEl,okMsg){
+  try{
+    await navigator.clipboard.writeText(text);
+    if(statusEl) statusEl.textContent=okMsg;
+  }catch(e){
+    const ta=document.createElement("textarea");
+    ta.value=text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    ta.remove();
+    if(statusEl) statusEl.textContent=okMsg;
+  }
+  setTimeout(()=>{if(statusEl)statusEl.textContent="";},2200);
+}
+
+if(shareValue && EVOLAB_SHARE_URL){
+  shareValue.textContent=EVOLAB_SHARE_URL;
+  copyShareBtn.disabled=false;
+}
+if(copyShareBtn){
+  copyShareBtn.addEventListener("click",()=>EVOLAB_SHARE_URL && copyText(EVOLAB_SHARE_URL,shareStatus,"Enlace copiado."));
+}
+if(aliasValue) aliasValue.textContent=MERCADOPAGO_ALIAS;
+if(copyAliasBtn){
+  copyAliasBtn.addEventListener("click",()=>copyText(MERCADOPAGO_ALIAS,aliasStatus,"Alias copiado."));
+}
+
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const clean=s=>(s||"").replace(/\s+/g," ").trim();
+const fold=s=>clean(s).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+
+const dict=[
+["Glóbulos rojos",/rto de hematies|recuento de globulos rojos|^hematies$/i],
+["Hematocrito",/^hematocrito$/i],["Hemoglobina",/^hemoglobina$/i],["VCM",/^v\.?c\.?m\.?$|^mcv$|^vcm$/i],
+["HCM",/^h\.?c\.?m\.?$|^hcm$/i],["CHCM",/^hcmc$|^chcm$/i],["RDW",/^rdw/i],
+["Glóbulos blancos",/^leucocitos$|recuento de globulos blancos|globulos blancos/i],
+["Neutrófilos segmentados",/^neutrofilos segmentados$/i],["Neutrófilos en cayado",/^neutrofilos en cayado$/i],
+["Eosinófilos",/^eosinofilos$/i],["Basófilos",/^basofilos$/i],["Monocitos",/^monocitos$/i],["Linfocitos",/^linfocitos$/i],
+["Plaquetas",/recuento de plaquetas/i],
+["Eritrosedimentación",/primera hora|eritrosedimentacion/i],
+["Glucemia",/^glucemia$/i],["Urea",/^uremia$/i],["Creatinina",/^creatininemia$/i],["IFGe",/^ifge$/i],["Ácido úrico",/^uricemia$/i],
+["Colesterol total",/^colesterol total$|colesterolemia total/i],["HDL",/colesterol hdl|hdl - colesterol/i],
+["LDL",/colesterol ldl|ldl - colesterol/i],["Triglicéridos",/trigliceridemia|trigliceridos plasmaticos/i],["Índice de Castelli",/indice de castelli/i],
+["No-HDL",/no-hdl colesterol/i],
+["Bilirrubina directa",/^bilirrubina directa$/i],["Bilirrubina indirecta",/^bilirrubina indirecta$/i],["Bilirrubina total",/^bilirrubina total$/i],
+["Fosfatasa alcalina",/fosfatasa alcalina/i],["TGP / ALT",/^tgp|gpt \(alat\)/i],["TGO / AST",/^tgo|got \(asat\)/i],
+["Proteínas totales",/^proteinas totales$/i],["Albúmina",/^sero albuminas$|^albumina$/i],
+["HbA1c",/hemoglobina glicosilada|hba1c en %/i],
+["Sodio",/^sodio$/i],["Potasio",/^potasio$/i],
+["TSH",/^tsh\b/i],["T4 libre",/t4 libre/i],["T4 total",/^t4 \(tiroxina\)$/i],["T3 total",/^t3 - triiodotironina(?: plasmatica)?$/i],["T3 libre",/t3 libre/i],
+["Vitamina D",/vitamina d 25 oh/i],["PSA",/psa-antigeno de prostata/i],
+["CPK",/^cpk$/i],["Microalbuminuria",/^microalbuminuria$/i],["Creatininuria",/^creatininuria$/i],["Relación albúmina/creatinina",/relacion albumina\/creatinina/i],
+["HBsAg",/hepatitis b antigeno hbsag/i],["Hepatitis C Ac",/hepatitis c - anticuerpos/i],["VDRL",/vdrl cuantitativa/i],["HIV",/hiv1\/hiv2/i],
+["Color orina",/^color$/i],["Aspecto orina",/^aspecto$/i],["Densidad orina",/^densidad$/i],["pH orina",/^ph$/i],
+["Proteínas orina",/^proteinas$/i],["Glucosa orina",/^glucosa$/i],["Acetona orina",/^acetona$/i],["Pigmentos biliares",/^pigmentos biliares$/i],["Urobilinógeno",/^urobilinogeno$/i],
+["Nitritos orina",/^nitritos$/i],["Leucocitos esterasa",/leucocitos \(r\. de esterasa\)/i],["Eritrocitos bencidina",/eritrocitos \(r\. de bencidina\)/i],
+["Células sedimento",/^celulas$/i],["Leucocitos sedimento",/^leucocitos$/i],["Hematíes sedimento",/^hematies$/i],
+["Lípidos totales",/^lipidos totales$/i],["Pre-beta lipoproteínas",/^pre-beta lipoproteinas$/i],["Beta lipoproteínas",/^beta lipoproteinas$/i],
+["Alfa lipoproteínas",/^alfa lipoproteinas$/i],["Quilomicrones",/^quilomicrones$/i]
+];
+function normalizeAnalyteLabel(name){
+ return clean(name||"")
+   .replace(/\s*\(\s*\d+\s*\)\s*$/,"")
+   .replace(/\s+/g," ")
+   .trim();
+}
+function canonical(name){
+ const f=fold(normalizeAnalyteLabel(name));
+ if(/^otros elementos$/.test(f)) return "Otros elementos (orina)";
+ if(/^cuerpos cetonicos$/.test(f)) return "Cuerpos cetónicos (orina)";
+ if(/^bilirrubina$/.test(f)) return "Bilirrubina (orina)";
+ for(const [canon,re] of dict){if(re.test(f))return canon}
+ return null;
+}
+
+const gold={
+"250340760":["Hematocrito","Hemoglobina","Glóbulos rojos","Glóbulos blancos","Neutrófilos en cayado","Neutrófilos segmentados","Eosinófilos","Basófilos","Linfocitos","Monocitos","VCM","HCM","CHCM","RDW","Plaquetas","Glucemia","Urea","Colesterol total","Triglicéridos","HDL","LDL","Bilirrubina total","Bilirrubina directa","Fosfatasa alcalina","TGO / AST","TGP / ALT","HbA1c","TSH","T4 libre","T3 total","HBsAg","Hepatitis C Ac","VDRL","HIV"],
+"101308903":["Glóbulos rojos","Hemoglobina","Hematocrito","VCM","HCM","CHCM","RDW","Glóbulos blancos","Neutrófilos en cayado","Neutrófilos segmentados","Linfocitos","Monocitos","Basófilos","Eosinófilos","Plaquetas","Glucemia","HbA1c","Sodio","Potasio","Urea","Creatinina","IFGe","Ácido úrico","Colesterol total","HDL","Índice de Castelli","No-HDL","LDL","Triglicéridos","Proteínas totales","Albúmina","Bilirrubina total","Bilirrubina directa","Bilirrubina indirecta","TGP / ALT","TGO / AST","Fosfatasa alcalina","CPK","Microalbuminuria","Creatininuria","Relación albúmina/creatinina"],
+"390000345224":["Glóbulos rojos","VCM","Hematocrito","HCM","Hemoglobina","Glóbulos blancos","Neutrófilos segmentados","Basófilos","Eosinófilos","Monocitos","Linfocitos","Eritrosedimentación","Glucemia","Urea","Creatinina","Ácido úrico","Bilirrubina directa","Bilirrubina indirecta","Bilirrubina total","Fosfatasa alcalina","TGP / ALT","TGO / AST","Proteínas totales","Albúmina","Colesterol total","HDL","Índice de Castelli","LDL","Triglicéridos","Lípidos totales","Pre-beta lipoproteínas","Beta lipoproteínas","Alfa lipoproteínas","Quilomicrones","Vitamina D","T3 total","T4 total","TSH","PSA","Color orina","Aspecto orina","Densidad orina","pH orina","Proteínas orina","Glucosa orina","Acetona orina","Pigmentos biliares","Urobilinógeno","Nitritos orina","Leucocitos esterasa","Eritrocitos bencidina","Células sedimento","Leucocitos sedimento","Hematíes sedimento"]
+};
+
+const units=/(?:10e\d+\/l|m\/ul|k\/ul|mg\/dl|g\/dl|ng\/ml|pg\/ml|uui\/ml|ui\/l|u\/l|meq\/l|mmol\/mol|mg\/g|mm\/h|mg%|ug\/dl|iu\/ml|s\/co|fl|pg|%)/i;
+const qual=/^(negativo(?: \(-\))?|no reactivo|normal|ausentes|ligeramente disminu[ií]da\.?|no se observan)$/i;
+const semi=/^(?:\+{1,4}|0-\d+(?:\s*\/campo)?|\d+-\d+\s*\/campo)$/i;
+
+function parseProtocol(all){
+ let m=all.match(/Protocolo\s*N[º°]?\s*:?\s*(\d+)/i); if(m)return m[1];
+ m=all.match(/Orden\s*:\s*([\d ]+)/i); return m?m[1].replace(/\s/g,""):"";
+}
+function parseDate(all){let m=all.match(/(?:Ingreso|Fecha)\s*:?\s*(\d{2}\/\d{2}\/\d{4})/i);return m?m[1]:"";}
+
+function parsePatient(all){
+ let name="";
+ let m=all.match(/Paciente\s*:\s*([^\n\r]+?)(?=\s+(?:Página|Pagina|Orden|Protocolo|Fecha|Médico|Medico|Documento|HC)\s*:|$)/i);
+ if(m)name=clean(m[1]);
+ if(!name){
+   m=all.match(/PACIENTE\s*:\s*([^\n\r]+?)(?=\s+DNI\s*:|$)/i);
+   if(m)name=clean(m[1]);
+ }
+ // remove trailing internal patient/account codes in parentheses
+ name=name.replace(/\s*\([A-Z]\d+\)\s*$/i,"").replace(/,\s*/g," ").replace(/\s+/g," ").trim();
+
+ let doc="";
+ m=all.match(/Documento\s*:\s*(?:DNI\s*)?(\d{6,10})/i);
+ if(!m)m=all.match(/\bDNI\s*:\s*(\d{6,10})/i);
+ if(m)doc=m[1];
+
+ return {name,doc};
+}
+function patientKey(p){
+ if(p.doc)return "DNI:"+p.doc;
+ return "NOMBRE:"+fold(p.name).replace(/[^a-z0-9]/g,"");
+}
+
+function normalizedPersonName(name){
+ return fold(name||"")
+   .replace(/\b(de|del|la|las|los)\b/g," ")
+   .replace(/[^a-z0-9 ]/g," ")
+   .replace(/\s+/g," ")
+   .trim();
+}
+function samePersonByName(a,b){
+ const A=normalizedPersonName(a),B=normalizedPersonName(b);
+ if(!A||!B)return false;
+ if(A===B)return true;
+ const sa=new Set(A.split(" ")), sb=new Set(B.split(" "));
+ const common=[...sa].filter(x=>sb.has(x) && x.length>1).length;
+ const denom=Math.max(sa.size,sb.size);
+ return denom>0 && common/denom>=0.8;
+}
+function identityRelation(a,b){
+ if(!a||!b)return "unknown";
+ const sameName=samePersonByName(a.name,b.name);
+ const bothDoc=!!(a.doc&&b.doc);
+ if(bothDoc && a.doc===b.doc) return "same_doc";
+ if(sameName && !bothDoc) return "same";
+ if(sameName && bothDoc && a.doc!==b.doc) return "same_name_doc_conflict";
+ if(!sameName && bothDoc && a.doc!==b.doc) return "different";
+ return "unknown";
+}
+
+function parseLab(all){
+ const x=all.replace(/\r/g,"");
+ if(/Ladislao Martinez 43 Martinez/i.test(x)) return "Laboratorio Martínez";
+ if(/ProgBA-CEMIC|RIQAS|UNITY|MALBRAN/i.test(x)) return "Laboratorio CEMIC / formato histórico";
+ let m=x.match(/(?:Laboratorio|LABORATORIO)\s*:?\s*([^\n]{3,70})/i);
+ if(m && !/sometido|control|resultado|referencia/i.test(m[1])) return clean(m[1]);
+ return "Laboratorio no identificado";
+}
+function labKey(x){return fold(x).replace(/[^a-z0-9]/g,"")||"noidentificado";}
+
+function isAdministrativeRowText(text){
+ const s=fold(clean(text||""));
+ if(!s)return false;
+ const adminStarts=[
+   /^paciente\s*:/,/^documento\s*:/,/^dni\s*:/,/^protocolo\b/,/^medico\s*:/,/^médico\s*:/,
+   /^generacion\s*:/,/^generación\s*:/,/^ingreso\s*:/,/^fecha nacimiento\s*:/,/^fecha de nacimiento\s*:/,
+   /^numero de socio\s*:/,/^número de socio\s*:/,/^socio\s*:/,/^afiliad[oa]\s*:/,/^servicio\s*:/,
+   /^solicitado por\s*:/,/^prescriptor\s*:/,/^orden\s*:/,/^n[º°]\s*orden\s*:/,/^fecha orden\s*:/,
+   /^original\s+fecha de impresion\s*:/,/^original\s+fecha de impresión\s*:/,/^fecha de impresion\s*:/,/^fecha de impresión\s*:/,/^muestra recibida\s*:/,/^es copia\b.*fecha de impresion\s*:/,/^es copia\b.*fecha de impresión\s*:/
+ ];
+ if(adminStarts.some(r=>r.test(s)))return true;
+
+ // Administrative identifiers can appear in the middle of a visually reconstructed PDF row.
+ // Once a row explicitly contains one of these labels, none of its numbers may be laboratory results.
+ if(/\b(dni|documento|protocolo|n[º°o.]?\s*orden|numero de orden|número de orden|numero de socio|número de socio|afiliad[oa])\s*:/i.test(s)) return true;
+
+ // Mixed administrative rows: if any of these paired labels are present, block the whole row.
+ const mixed=[
+   /\bpaciente\s*:.*\b(documento|dni|pagina|página|protocolo|orden)\b/,
+   /\bprotocolo\b.*\bingreso\s*:/,
+   /\bmedico\s*:.*\bgeneracion\s*:/,
+   /\bmédico\s*:.*\bgeneración\s*:/,
+   /\bdocumento\s*:.*\bnumero de socio\s*:/,
+   /\bfecha\s*:.*\bservicio\s*:/
+ ];
+ if(mixed.some(r=>r.test(s)))return true;
+ if(/copia fiel del original|es copia.*fecha de impresion|es copia.*fecha de impresión|resultado validado|validado electronicamente|laboratorio sometido a controles|determinacion resultado unidad valores de referencia/.test(s))return true;
+
+ // Demografía del paciente: toda la fila es administrativa.
+ if(/\bsexo\s*:\s*(masculino|femenino)\b/.test(s))return true;
+ if(/\bedad\s*:\s*\d+/.test(s))return true;
+
+ // Validación profesional: nombre y matrícula nunca son resultados de laboratorio.
+ if(/\bvalidado por\s*:/.test(s))return true;
+ if(/\bm\.\s*n\.\s*:\s*\d+/.test(s) && /validado|bioquim|medic|profesional/.test(s))return true;
+
+ // Pie de página / impresión: usuario, fecha-hora y paginado.
+ if(/\busuario impresion\b|\busuario impresión\b/.test(s))return true;
+ if(/\bfecha impresion\b|\bfecha impresión\b/.test(s))return true;
+ if(/\bpagina\s+\d+\s+de\s+\d+\b|\bpágina\s+\d+\s+de\s+\d+\b/.test(s))return true;
+ if(/^centro medico\b|^centro médico\b|^sede\b|^hc\s*:/.test(s))return true;
+ if(/esta orden ha sido verificada|firmado electronicamente|firmado electrónicamente/.test(s))return true;
+
+ return false;
+}
+
+function isDeterminationContextRowText(text){
+ const s=fold(clean(text||""));
+ if(!s)return false;
+
+ // Method and specimen/sample descriptions belong to the current determination.
+ if(/^(metodo|método|metodos|métodos)\s*:/.test(s)) return true;
+ if(/^(muestra|tipo de muestra|material|especimen|espécimen)\s*:/.test(s)) return true;
+
+ // Typical reference-range subcategories. They describe interpretation/reference,
+ // not separate laboratory determinations.
+ const referenceStarts=[
+   /^embarazad[ao]s?\s*:/,
+   /^alterad[ao]\s*:/,
+   /^normal\s*:/,
+   /^adultos?\s*:/,
+   /^pediatr/i,
+   /^femenino\s*:/,
+   /^masculino\s*:/,
+   /^fase folicular\s*:/,
+   /^fase ovulatoria\s*:/,
+   /^fase lutea\s*:/,
+   /^fase lútea\s*:/,
+   /^postmenopaus/i,
+   /^1er\.?\s*trimestre\s*:/,
+   /^2do\.?\s*trimestre\s*:/,
+   /^3er\.?\s*trimestre\s*:/,
+   /^deficiencia\s*:/,
+   /^insuficiencia\s*:/,
+   /^suficiencia\b.*:/,
+   /^toxicidad\s*:/
+ ];
+ if(referenceStarts.some(r=>r.test(s))) return true;
+
+ // Additional interpretive/reference labels found in real reports.
+ if(/^recien nacido\b|^recién nacido\b|^prematuros?\b|^adultos?\b|^niños?\b|^\d+\s+meses?\b|^valor nutricionalmente recomendado\b|^borderline\b|^zona gris\b|^valores limites\b|^valores límites\b/i.test(s)) return true;
+ if(/^interpretaci[oó]n\b|t[eé]cnica suplementaria|confirmar por otra metodolog[ií]a/i.test(s)) return true;
+ if(/^conclusiones?\s*:/i.test(s)) return true;
+
+ // Lines that explicitly announce reference intervals are contextual.
+ if(/^(valor(?:es)? de referencia|intervalo(?:s)? de referencia|rango(?:s)? de referencia)\b/.test(s)) return true;
+
+ // Pure numeric ranges such as "0.40 a 0.85 mg/dl" or "70 - 110 mg/dl"
+ // are reference rows, never laboratory results by themselves.
+ if(/^\s*(?:<|>)?\s*-?\d+(?:[.,]\d+)?\s*(?:a|-|–|—)\s*(?:<|>)?\s*-?\d+(?:[.,]\d+)?(?:\s|$)/i.test(s)) return true;
+
+ return false;
+}
+function isNonResultRowText(text){
+ return isAdministrativeRowText(text) || isDeterminationContextRowText(text);
+}
+
+function semanticRole(text){
+ const raw=clean(text||"");
+ const s=fold(raw);
+ if(!s)return "vacio";
+ if(isAdministrativeRowText(raw)) return "metadato";
+ if(isDeterminationContextRowText(raw)) return "contexto";
+ if(/^resultado\s*:/i.test(raw)) return "resultado";
+ if(/^(valores?|intervalos?|rangos?) de referencia\b/i.test(raw)) return "referencia";
+ if(/^(conclusiones?|interpretaci[oó]n)\s*:/i.test(raw)) return "observacion";
+ if(/^(otros elementos)\s*:/i.test(raw)) return "observacion";
+ return "candidato";
+}
+
+
+function looksLikeReferenceLabel(name){
+ const s=fold(clean(name||""));
+ return /fase (folicular|ovulatoria|lutea|lútea)|embarazad|borderline|zona gris|valores? limites|valores? límites|recien nacid|recién nacid|prematur|niños? mayores?|meses?\s*-?\s*\d*\s*años?|adultos?|valor nutricionalmente recomendado|deficiencia|insuficiencia|suficiencia|toxicidad|postmenopaus|trimestre|^interpretacion\b|^interpretación\b|tecnica suplementaria|técnica suplementaria/.test(s);
+}
+
+
+
+
+function firstMatch(text, patterns){
+ for(const re of patterns){
+   const m=text.match(re);
+   if(m && m[1]) return clean(m[1]);
+ }
+ return "";
+}
+function extractMetadata(all){
+ const x=all.replace(/\r/g,"\n");
+ const patient=parsePatient(x);
+ const ingreso=firstMatch(x,[
+   /\bIngreso\s*:\s*(\d{2}\/\d{2}\/\d{4}(?:\s+\d{1,2}:\d{2})?)/i
+ ]);
+ const generacion=firstMatch(x,[
+   /\bGeneraci[oó]n\s*:\s*(\d{2}\/\d{2}\/\d{4}(?:\s+\d{1,2}:\d{2}(?::\d{2})?)?)/i
+ ]);
+ const fechaOrden=firstMatch(x,[
+   /\bFecha\s+Orden\s*:\s*(\d{2}\/\d{2}\/\d{4})/i
+ ]);
+ const fechaGenerica=firstMatch(x,[
+   /\bFecha\s*:\s*(\d{2}\/\d{2}\/\d{4}(?:\s+\d{1,2}:\d{2})?)/i
+ ]);
+ const meta={
+   paciente: patient.name,
+   documento: patient.doc,
+   laboratorio: parseLab(x),
+   protocolo: firstMatch(x,[
+     /Protocolo\s*(?:N[º°o.]*)?\s*:\s*([A-Z0-9 -]{4,30})/i,
+     /\bPROTOCOLO\s*:\s*([A-Z0-9 -]{4,30})/i,
+     /\bOrden\s*:\s*([0-9 ]{5,25})/i
+   ]),
+   ingreso,
+   generacion,
+   fechaOrden,
+   fechaEstudio: ingreso || fechaOrden || fechaGenerica,
+   fechaNacimiento: firstMatch(x,[/Fecha\s+Nacimiento\s*:\s*(\d{2}\/\d{2}\/\d{4})/i]),
+   numeroSocio: firstMatch(x,[
+     /N[uú]mero\s+de\s+socio\s*:\s*([0-9]{5,25})/i,
+     /\bSocio\s*:\s*([0-9]{5,25})/i,
+     /\bAfiliad[oa]\s*:\s*([0-9]{5,25})/i
+   ]),
+   prescriptor: firstMatch(x,[
+     /\bM[eé]dico\s*:\s*([^\n]{3,80})/i,
+     /\bSolicitado\s+por\s*:\s*([^\n]{3,80})/i,
+     /\bPrescriptor\s*:\s*([^\n]{3,80})/i
+   ]),
+   numeroOrden: firstMatch(x,[
+     /N[º°]\s*ORDEN\s*:\s*([A-Z0-9 -]{3,25})/i,
+     /\bOrden\s*:\s*([0-9 ]{5,25})/i
+   ]),
+   servicio: firstMatch(x,[/\bServicio\s*:\s*([^\n]{2,50})/i]),
+   fechaImpresion: firstMatch(x,[
+     /Fecha\s+de\s+impresi[oó]n\s*:\s*([^\n]{5,50})/i,
+     /Fecha\s+Impresi[oó]n\s*:\s*([^\n]{5,50})/i
+   ]),
+   muestraRecibida: firstMatch(x,[
+     /Muestra\s+recibida\s*:\s*(\d{2}\/\d{2}\/\d{4}\s+\d{1,2}:\d{2}(?::\d{2})?)/i
+   ]),
+   sexo: firstMatch(x,[
+     /SEXO\s*:\s*(MASCULINO|FEMENINO)/i
+   ]),
+   edad: firstMatch(x,[
+     /EDAD\s*:\s*([^\n]{1,30})/i
+   ])
+ };
+ return meta;
+}
+const META_NAMES=[
+ "documento","dni","numero de socio","número de socio","socio","afiliado","afiliada",
+ "fecha","fecha de impresion","fecha de impresión","original fecha de impresion","original fecha de impresión",
+ "protocolo","orden","numero de orden","número de orden","servicio","paciente","medico","médico",
+ "prescriptor","solicitado por","fecha nacimiento","fecha de nacimiento","generacion","generación",
+ "pagina","página","hoja"
+];
+function isMetadataCandidate(obj){
+ const n=fold(clean(obj.name||"")).replace(/[.:]+$/,"").trim();
+ if(META_NAMES.some(k=>n===fold(k))) return true;
+ if(/^(documento|dni|protocolo|paciente|servicio|orden|n[uú]mero de socio|socio|afiliad|fecha( de impresi[oó]n)?|original fecha|m[eé]dico|prescriptor|solicitado por|p[aá]gina|hoja)\b/i.test(n)) return true;
+ const s=fold(clean(obj.source||""));
+ // Administrative lines are removed only when the candidate name is also administrative-like.
+ if(/copia fiel del original|fecha de impresion|numero de socio|documento:|protocolo|fecha nacimiento/.test(s) &&
+    /documento|fecha|original|socio|protocolo|paciente|servicio|orden/.test(n)) return true;
+ return false;
+}
+
+
+
+async function rowsFromPdf(file){
+ const data=new Uint8Array(await file.arrayBuffer()),pdf=await pdfjsLib.getDocument({data}).promise;
+ let rows=[],sequence=[],all="";
+ for(let p=1;p<=pdf.numPages;p++){
+  const page=await pdf.getPage(p),tc=await page.getTextContent();
+  const items=tc.items.map((it,k)=>({s:clean(it.str),x:it.transform[4],y:it.transform[5],k})).filter(x=>x.s);
+  sequence.push(...items.map(x=>x.s)); all+=items.map(x=>x.s).join("\n")+"\n";
+  const rs=[];
+  for(const it of items){let r=rs.find(z=>Math.abs(z.y-it.y)<2.0);if(!r){r={y:it.y,items:[]};rs.push(r)}r.items.push(it)}
+  rs.sort((a,b)=>b.y-a.y);
+  for(const r of rs){r.items.sort((a,b)=>a.x-b.x);let text=clean(r.items.map(x=>x.s).join(" "));if(text){
+   const role=semanticRole(text);
+   rows.push({
+     p,text,items:r.items,
+     role,
+     administrative:role==="metadato",
+     context:role==="contexto"||role==="referencia",
+     blocked:["metadato","contexto","referencia"].includes(role)
+   })
+  }}
+ }
+ return{rows,sequence,all,pages:pdf.numPages};
+}
+function add(out,obj){
+ if(!obj.name||obj.value===undefined||obj.value==="")return;
+ if(isMetadataCandidate(obj))return;
+ if(/^resultado$/i.test(clean(obj.name))||/^conclusiones?$/i.test(clean(obj.name)))return;
+ if(looksLikeReferenceLabel(obj.name))return;
+ let canon=canonical(obj.name),key=(canon||fold(obj.name))+"|"+obj.value+"|"+(obj.unit||"");
+ if(out.some(x=>x.key===key))return;
+ out.push({...obj,canon,key});
+}
+function stripHeaderName(s){
+ return normalizeAnalyteLabel(clean(s.replace(/^\*+|\*+$/g,"").replace(/\s+Resultado.*$/i,"").replace(/\s{2,}/g," ")));
+}
+function numericVal(s){let m=s.match(/(?:<|>)?\s*-?\d+(?:[.,]\d+)?/);return m?m[0].trim():"";}
+
+
+function semanticStats(st){
+ const c={metadato:0,contexto:0,referencia:0,resultado:0,observacion:0,candidato:0};
+ for(const r of st.rows||[])if(c[r.role]!==undefined)c[r.role]++;
+ return c;
+}
+
+function collectDeterminationContext(st){
+ const rows=st.rows, out=[];
+ let current="";
+ for(let i=0;i<rows.length;i++){
+   const raw=rows[i].text;
+   const heading=stripHeaderName(raw);
+   const c=canonical(heading);
+   if(c && !rows[i].blocked) current=c;
+
+   if(rows[i].context && current){
+     let type="Contexto";
+     const f=fold(raw);
+     if(/^(metodo|método|metodos|métodos)\s*:/.test(f)) type="Método";
+     else if(/^(muestra|tipo de muestra|material|especimen|espécimen)\s*:/.test(f)) type="Muestra";
+     else type="Referencia";
+     out.push({parameter:current,type,text:raw});
+   }
+ }
+ return out;
+}
+
+
+
+function isInstitutionHeading(h){
+ const s=fold(clean(h||""));
+ return /^centro medico\b|^centro médico\b|^sede\b|^laboratorio\b|^servicio\b|^hc\b/.test(s);
+}
+function isPlausibleAnalyteHeading(h){
+ const x=clean(h||"");
+ const s=fold(x);
+ if(!x || x.length<2 || x.length>100)return false;
+ if(isInstitutionHeading(x) || looksLikeReferenceLabel(x))return false;
+ if(/^(resultado|unidad|valor de referencia|examen|observaciones?|interpretacion|interpretación)\b/.test(s))return false;
+ if(/^(metodo|método|muestra|tipo de muestra|material|especimen|espécimen)\b/.test(s))return false;
+ if(/confirmar por otra metodologia|confirmar por otra metodología|tecnica suplementaria|técnica suplementaria/.test(s))return false;
+ // A heading needs letters; embedded digits such as C3, C4 or CH50 are allowed.
+ if(!/[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]/.test(x))return false;
+ // A line that begins as a numeric result is not a heading.
+ if(/^(?:<|>)?\s*-?\d+(?:[.,]\d+)?(?:\s|$)/.test(x))return false;
+ return true;
+}
+function classifyUnknownItem(x){
+ if(!x || !x.name)return "review";
+ if(looksLikeReferenceLabel(x.name) || isInstitutionHeading(x.name))return "review";
+ if(["bloque","resultado asociado","fila","cualitativo","observación"].includes(x.strategy))return "isolated";
+ return "isolated";
+}
+
+
+
+function extractErythrocyteSeries(st,out){
+ const lines=(st.all||"").split(/\n+/).map(clean).filter(Boolean);
+ const f=lines.map(fold);
+ let a=f.findIndex(x=>/^serie eritrocitaria\b/.test(x));
+ if(a<0)return;
+ let b=f.findIndex((x,i)=>i>a && /^serie leucocitaria\b/.test(x));
+ if(b<0)b=Math.min(lines.length,a+120);
+
+ const wanted=new Set(["Glóbulos rojos","Hemoglobina","Hematocrito","VCM","HCM","CHCM","RDW"]);
+ for(let i=a+1;i<b;i++){
+   const heading=normalizeAnalyteLabel(lines[i]);
+   const canon=canonical(heading);
+   if(!canon || !wanted.has(canon))continue;
+
+   let j=i+1;
+   // Laboratory method markers such as "(1)", "(2)", "(3)", "(4)" are metadata,
+   // not part of the analyte name and not a result.
+   while(j<b && /^\(\s*\d+\s*\)$/.test(lines[j]))j++;
+
+   if(j>=b)continue;
+   const vm=lines[j].match(/^(?:<|>)?\s*-?\d+(?:[.,]\d+)?\s*$/);
+   if(!vm)continue;
+   const value=vm[0].trim();
+
+   let unit="",k=j+1;
+   for(;k<=Math.min(j+3,b-1);k++){
+     const um=lines[k].match(units);
+     if(um){unit=um[0];break}
+     if(canonical(normalizeAnalyteLabel(lines[k])))break;
+   }
+   add(out,{
+     name:heading,
+     value,
+     unit,
+     source:lines.slice(i,Math.min(k+1,b)).join(" → "),
+     strategy:"serie eritrocitaria"
+   });
+ }
+}
+
+function extractSequentialKnownAnalytes(st,out){
+ const lines=(st.all||"").split(/\n+/).map(clean).filter(Boolean);
+ for(let i=0;i<lines.length;i++){
+   const heading=normalizeAnalyteLabel(lines[i]);
+   const canon=canonical(heading);
+   if(!canon)continue;
+
+   // Structural rescue only: next non-empty line must begin with a numeric result,
+   // and the following nearby lines should contain a compatible unit.
+   let value="",unit="",source=[lines[i]];
+   for(let j=i+1;j<=Math.min(i+4,lines.length-1);j++){
+     const s=lines[j];
+     source.push(s);
+     if(!value){
+       const m=s.match(/^(?:<|>)?\s*-?\d+(?:[.,]\d+)?\s*$/);
+       if(m){value=m[0].trim();continue}
+     }
+     if(value && !unit){
+       const um=s.match(units);
+       if(um){unit=um[0];break}
+     }
+   }
+   if(value){
+     add(out,{name:heading,value,unit,source:source.join(" → "),strategy:"rescate estructural"});
+   }
+ }
+}
+
+function extract(st){
+ const out=[],rows=st.rows;
+
+ // Dedicated structural parser for the erythrocyte series.
+ extractErythrocyteSeries(st,out);
+
+ // Strategy A: visual rows. Supports one or several name:value pairs on same line.
+ for(const r of rows){
+  if(r.blocked)continue;
+  if(["resultado","observacion"].includes(r.role))continue;
+  const t=r.text;
+  // If a known analyte already appears before the first numeric value, consume that primary result.
+  // Any later "Prematuros:", "Zona gris:", etc. belongs to reference/context and is not re-parsed.
+  const nmPrimary=normalizeAnalyteLabel(clean(t.split(/(?=(?:<|>)?\s*-?\d+(?:[.,]\d+)?)/)[0]));
+  const canonPrimary=canonical(nmPrimary);
+  let consumedPrimary=false;
+  if(canonPrimary){
+    const rest=t.slice(t.indexOf(nmPrimary)+nmPrimary.length);
+    const v=numericVal(rest), um=rest.match(units);
+    if(v){
+      add(out,{name:nmPrimary,value:v,unit:um?um[0]:"",source:t,strategy:"fila"});
+      consumedPrimary=true;
+    }
+  }
+
+  if(!consumedPrimary){
+    // multiple colon-style pairs (JMCA fixed-column reports)
+    const re=/([A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9().\/ -]{2,45}?)\s*:\s*((?:<|>)?\s*-?\d+(?:[.,]\d+)?|Negativo(?: \(-\))?|Normal|Ausentes|No se observan)(?:\s+((?:10e\d+\/l|m\/ul|k\/ul|mg\/dl|g\/dl|ng\/ml|pg\/ml|uui\/ml|ui\/l|u\/l|meq\/l|mm\/h|mg%|ug\/dl|fl|pg|%|\/campo)))?/ig;
+    let m; while((m=re.exec(t))){
+      const nm=clean(m[1]);
+      if(/^resultado$/i.test(nm) || /^conclusiones?$/i.test(nm)) continue;
+      if(looksLikeReferenceLabel(nm)) continue;
+      add(out,{name:nm,value:clean(m[2]),unit:m[3]||"",source:t,strategy:"fila/panel"})
+    }
+  }
+ }
+
+ // Strategy B: block heading -> subsequent value row.
+ for(let i=0;i<rows.length;i++){
+  if(rows[i].blocked)continue;
+  if(rows[i].role!=="candidato")continue;
+  const heading=stripHeaderName(rows[i].text);
+  const canon=canonical(heading);
+  if(!canon)continue;
+
+  for(let j=i;j<=Math.min(i+6,rows.length-1);j++){
+   if(rows[j].p!==rows[i].p)break;
+
+   // A reference/context/administrative row cannot become the result.
+   if(j!==i && (rows[j].blocked || ["contexto","referencia","metadato","observacion"].includes(rows[j].role))) continue;
+
+   // If another recognized analyte starts before we found a result,
+   // the current block ended. Never borrow the next analyte's number.
+   if(j>i){
+     const nextHead=stripHeaderName(rows[j].text);
+     const nextCanon=canonical(nextHead);
+     if(nextCanon && nextCanon!==canon) break;
+   }
+
+   const tx=rows[j].text;
+   let v="",u="";
+   const um=tx.match(units);
+
+   // Do not interpret a row headed by another analyte as a numeric value.
+   if(um){
+     const before=clean(tx.slice(0,Math.max(um.index,1)));
+     const beforeHead=stripHeaderName(before);
+     const beforeCanon=canonical(beforeHead);
+     if(!beforeCanon || beforeCanon===canon || /^resultado\b/i.test(before)){
+       v=numericVal(before);
+       u=um[0];
+     }
+   }
+
+   if(!v && (qual.test(tx)||semi.test(tx))) v=tx;
+   if(v){
+     add(out,{name:heading,value:v,unit:u,source:rows[i].text+" → "+tx,strategy:"bloque"});
+     break;
+   }
+  }
+ }
+
+ // Strategy C: "Resultado : value unit" belongs to the nearest preceding determination heading.
+ for(let i=0;i<rows.length;i++){
+  if(rows[i].blocked)continue;
+  if(!/^resultado\b/i.test(rows[i].text))continue;
+
+  const resultText=rows[i].text.replace(/^resultado\s*:?\s*/i,"");
+  const v=numericVal(resultText);
+  const um=rows[i].text.match(units);
+  const q=!v && qual.test(resultText) ? clean(resultText) : "";
+  if(!v && !q)continue;
+
+  let chosen="";
+  // Search only within the local block. The nearest plausible heading wins.
+  // Embedded digits in analyte names (C3, C4, CH50, T3, T4...) are valid.
+  for(let j=i-1;j>=Math.max(0,i-8);j--){
+    if(rows[j].p!==rows[i].p)break;
+    if(rows[j].blocked)continue;
+    if(rows[j].role!=="candidato")continue;
+    const h=stripHeaderName(rows[j].text);
+    if(!isPlausibleAnalyteHeading(h))continue;
+    chosen=h;
+    break;
+  }
+  if(chosen){
+    add(out,{name:chosen,value:v||q,unit:um?um[0]:"",source:chosen+" → "+rows[i].text,strategy:"resultado asociado"});
+  }
+ }
+
+ // Strategy D: urinalysis / qualitative "label : text".
+ for(const r of rows){
+  if(r.blocked)continue;
+  let m=r.text.match(/^([^:]{2,45})\s*:\s*(Negativo(?: \(-\))?|Normal|Ausentes|No se observan|L[ií]mpida|Amarillo|(?:\+{1,4})|\d+(?:-\d+)?(?:\s*\/campo)?)$/i);
+  if(m){
+    const nm=clean(m[1]);
+    if(/^conclusiones?$/i.test(nm)) continue;
+    add(out,{name:nm,value:clean(m[2]),unit:/\/campo/i.test(m[2])?"/campo":"",source:r.text,strategy:r.role==="observacion"?"observación":"cualitativo"});
+  }
+ }
+
+ // Final structural rescue for known analytes split across consecutive PDF text lines.
+ extractSequentialKnownAnalytes(st,out);
+
+ // Final safety net: discard an item if its source is only a reference interval.
+ // This specifically prevents pediatric/adult reference limits from becoming
+ // false measurements (e.g. creatinine 0.40 from "0.40 a 0.85 mg/dl").
+ const adminIds=new Set();
+ const addAdminId=v=>{
+   const d=String(v||"").replace(/\D/g,"");
+   if(d.length>=5) adminIds.add(d);
+ };
+ addAdminId(st.patient?.doc);
+ addAdminId(st.protocol);
+ addAdminId(st.meta?.documento);
+ addAdminId(st.meta?.protocolo);
+ addAdminId(st.meta?.numeroOrden);
+ addAdminId(st.meta?.numeroSocio);
+
+ return out.filter(x=>{
+   const s=fold(clean(x.source||""));
+
+   // Pure reference intervals are never results.
+   if(/^\s*(?:<|>)?\s*-?\d+(?:[.,]\d+)?\s*(?:a|-|–|—)\s*(?:<|>)?\s*-?\d+(?:[.,]\d+)?/.test(s)) return false;
+
+   // Exact collision with an administrative identifier (DNI, protocol, order, member number)
+   // is structurally impossible as a valid extracted result in this position.
+   const valueDigits=String(x.value||"").replace(/\D/g,"");
+   if(valueDigits.length>=5 && adminIds.has(valueDigits)) return false;
+
+   // If the source itself exposes an administrative label and the extracted value matches
+   // a long identifier-like number, reject it before it reaches the longitudinal table.
+   if(valueDigits.length>=5 &&
+      /\b(dni|documento|protocolo|orden|numero de socio|número de socio|afiliad[oa])\b/i.test(s)) return false;
+
+   return true;
+ });
+}
+
+function goldKey(st){
+ if(gold[st.protocol])return st.protocol;
+ if(st.protocol==="")return "";
+ return "";
+}
+function coverage(st){
+ const g=gold[goldKey(st)]||[],found=new Set(st.items.filter(x=>x.canon).map(x=>x.canon));
+ const hits=g.filter(x=>found.has(x)),miss=g.filter(x=>!found.has(x));
+ return{g,hits,miss,pct:g.length?Math.round(hits.length/g.length*100):null};
+}
+
+$("go").onclick=async()=>{
+ const fs=[...$("files").files]; if(!fs.length){alert("Seleccione al menos un PDF.");return}
+ $("pb").classList.remove("hidden");$("pt").textContent=`${fs.length} archivo(s) PDF seleccionados.`;const sts=[];
+ for(let i=0;i<fs.length;i++){
+  $("bar").style.width=`${Math.round(i/fs.length*100)}%`;$("pt").textContent=`Analizando ${i+1}/${fs.length}: ${fs[i].name}`;
+  try{
+   const p=await rowsFromPdf(fs[i]);
+   let st={file:fs[i].name,...p};
+   st.protocol=parseProtocol(p.all);
+   st.date=parseDate(p.all);
+   st.patient=parsePatient(p.all);
+   st.patientKey=patientKey(st.patient);
+   st.meta=extractMetadata(p.all);
+   st.date=st.meta.fechaEstudio||st.date;
+   st.lab=st.meta.laboratorio||parseLab(p.all);
+   st.labKey=labKey(st.lab);
+   st.items=[];
+   st.cov={g:[],hits:[],miss:[],pct:null};
+   sts.push(st);
+  }catch(e){sts.push({file:fs[i].name,error:e.message,items:[],patient:{name:"",doc:""},patientKey:"",cov:{g:[],hits:[],miss:[],pct:null}})}
+ }
+ // Build identity groups using either a confirmed same DNI or a strong full-name match.
+ const identifiable=sts.filter(s=>!s.error && (s.patient.doc||s.patient.name));
+ const parent=identifiable.map((_,i)=>i);
+ const find=i=>parent[i]===i?i:(parent[i]=find(parent[i]));
+ const unite=(a,b)=>{a=find(a);b=find(b);if(a!==b)parent[b]=a};
+ for(let a=0;a<identifiable.length;a++){
+   for(let b=a+1;b<identifiable.length;b++){
+     const A=identifiable[a].patient,B=identifiable[b].patient;
+     const sameDoc=!!(A.doc&&B.doc&&A.doc===B.doc);
+     const sameName=samePersonByName(A.name,B.name);
+     if(sameDoc||sameName)unite(a,b);
+   }
+ }
+ const groupMap=new Map();
+ identifiable.forEach((s,i)=>{const r=find(i);if(!groupMap.has(r))groupMap.set(r,[]);groupMap.get(r).push(s)});
+ const identityGroups=[...groupMap.values()].sort((a,b)=>b.length-a.length);
+ const principalGroup=identityGroups[0]||[];
+ // Prefer as principal representative a study that has BOTH name and DNI.
+ const principalStudy=principalGroup.find(s=>s.patient.name&&s.patient.doc)||principalGroup[0];
+ const principalPatient=principalStudy?.patient||{name:"",doc:""};
+
+ for(const s of sts){
+   if(s.error)continue;
+   if(!s.patient.doc&&!s.patient.name){
+     // Ausencia de identidad legible no equivale a paciente diferente.
+     // El estudio se incorpora provisoriamente y queda marcado para control.
+     s.excluded=false;
+     s.identityWarning="El informe no permitió extraer nombre ni DNI con suficiente claridad. Se incorpora provisoriamente y queda señalado para control de identidad.";
+     if(principalPatient.name){
+       s.patient.name=principalPatient.name;
+       s.meta.paciente=principalPatient.name;
+       s.identityInheritedName=true;
+     }
+     if(principalPatient.doc){
+       s.identityInheritedDoc=principalPatient.doc;
+     }
+
+     s.detContext=collectDeterminationContext(s);
+     s.semantic=semanticStats(s);
+     s.items=extract(s);
+     for(const x of s.items) if(!x.canon) x.unknownClass=classifyUnknownItem(x);
+     s.cov=coverage(s);
+     continue;
+   }
+
+   const rel=identityRelation(s.patient,principalPatient);
+   if(rel==="different"){
+     s.excluded=true;
+     s.excludeReason="Paciente diferente del conjunto principal";
+     continue;
+   }
+
+   // Same DNI is sufficient identity evidence. If the report did not expose the name, inherit it only for display/grouping.
+   s.excluded=false;
+   s.identityWarning="";
+   if(rel==="same_doc" && !s.patient.name && principalPatient.name){
+     s.patient.name=principalPatient.name;
+     s.meta.paciente=principalPatient.name;
+     s.identityInheritedName=true;
+   }
+   if(rel==="same_name_doc_conflict"){
+     s.identityWarning="El nombre coincide con el paciente principal, pero el identificador numérico difiere. El estudio se incorpora y queda señalado para control de identidad.";
+   }else if(rel==="unknown" && principalPatient.name){
+     // Do not exclude on weak evidence alone.
+     s.identityWarning="La identidad no pudo confirmarse por completo; el estudio se incorpora provisoriamente para revisión.";
+   }
+
+   s.detContext=collectDeterminationContext(s);
+   s.semantic=semanticStats(s);
+   s.items=extract(s);
+   for(const x of s.items) if(!x.canon) x.unknownClass=classifyUnknownItem(x);
+   s.cov=coverage(s);
+ }
+ $("bar").style.width="100%";$("pt").textContent="Análisis finalizado.";render(sts);
+}
+
+function parseStudyDateValue(s){
+ const raw=(s?.date||s?.meta?.fechaEstudio||"").trim();
+ let m=raw.match(/(\d{2})\/(\d{2})\/(\d{4})/);
+ if(m)return new Date(Number(m[3]),Number(m[2])-1,Number(m[1]));
+ m=raw.match(/(\d{4})-(\d{2})-(\d{2})/);
+ if(m)return new Date(Number(m[1]),Number(m[2])-1,Number(m[3]));
+ return null;
+}
+function classifyEvolutionWindow(sts, years=5){
+ const dated=sts.map(s=>({s,d:parseStudyDateValue(s)})).filter(x=>x.d && !isNaN(x.d));
+ if(!dated.length){for(const s of sts)s.historicalAntecedent=false;return null}
+ const latest=new Date(Math.max(...dated.map(x=>x.d.getTime())));
+ const cutoff=new Date(latest);
+ cutoff.setFullYear(cutoff.getFullYear()-years);
+ for(const s of sts){
+   const d=parseStudyDateValue(s);
+   s.historicalAntecedent=!!(d && d<cutoff);
+ }
+ return {latest,cutoff};
+}
+function fmtDateObj(d){
+ if(!d)return "";
+ return String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0")+"/"+d.getFullYear();
+}
+
+
+
+function numVal(v){
+  // Laboratory reports in our test set use both decimal point and decimal comma.
+  // Never strip "." blindly: 0.2 must remain 0.2, not become 2.
+  let s=String(v??"").trim();
+  const m=s.match(/(?:<|>)?\s*(-?\d+(?:[.,]\d+)?)/);
+  if(!m)return null;
+  return Number(m[1].replace(",","."));
+}
+function unitKey(u){
+  let k=fold(u||"").replace(/\s+/g,"");
+  if(!k)return "";
+  // Harmless notation variants found across the same laboratory history.
+  k=k.replace(/µ/g,"u");
+  if(k==="m/dl")k="mg/dl";       // source typo seen in bilirubin indirecta
+  if(k==="mg%")k="mg/dl";        // historical equivalent notation in this context
+  if(k==="mm/h"||k==="mm/hora"||k==="mm1h")k="mm"; // ESR / first hour
+  if(k==="10e12/l"||k==="10^12/l")k="10e12/l";
+  if(k==="10e9/l"||k==="10^9/l")k="10e9/l";
+  return k;
+}
+function deriveReference(x){
+  const src=String(x?.source||"").replace(/→/g," ");
+  const val=String(x?.value||"").trim();
+  let pos=-1;
+  if(val) pos=src.toLowerCase().indexOf(val.toLowerCase());
+  let tail=pos>=0?src.slice(pos+val.length):src;
+
+  // If a unit was extracted, start looking after the first occurrence of it.
+  if(x?.unit){
+    const up=tail.toLowerCase().indexOf(String(x.unit).toLowerCase());
+    if(up>=0) tail=tail.slice(up+String(x.unit).length);
+  }
+
+  // Canonical range syntax: 70 - 110, 70 a 110.
+  let m=tail.match(/(-?\d+(?:[.,]\d+)?)\s*(?:-|–|—|\ba\b)\s*(-?\d+(?:[.,]\d+)?)/i);
+  if(!m){
+    // Historical reports often print "70 110" without a hyphen.
+    const ns=[...tail.matchAll(/-?\d+(?:[.,]\d+)?/g)].map(z=>z[0]);
+    if(ns.length>=2) m=[null,ns[0],ns[1]];
+  }
+  if(!m)return null;
+  const lo=Number(String(m[1]).replace(",",".")), hi=Number(String(m[2]).replace(",","."));
+  if(!Number.isFinite(lo)||!Number.isFinite(hi)||hi<=lo)return null;
+  return {lo,hi,text:`${m[1]}–${m[2]}`};
+}
+function studyTime(s){
+  const d=parseStudyDateValue(s);
+  return d?d.getTime():0;
+}
+function calcTrend(points){
+  if(points.length<3){
+    return {symbol:"—",label:"Sin tendencia definida",why:"menos de 3 estudios comparables"};
+  }
+
+  const p=points.slice(-3);
+  const vals=p.map(z=>z.value);
+  const a=vals[0], b=vals[1], c=vals[2];
+  const d1=b-a, d2=c-b;
+
+  const mean=Math.abs((a+b+c)/3);
+  const amp=Math.max(...vals)-Math.min(...vals);
+  const eps=Math.max(mean*0.03, 1e-9);
+
+  // 0) Retorno al nivel: si el tercer valor vuelve al nivel del primero,
+  // el movimiento intermedio es una oscilación, no una dirección.
+  // Ejemplo: 0.2 → 0.3 → 0.2 = Estable.
+  const returnTol=Math.max(mean*0.05, 1e-9);
+  if(Math.abs(c-a)<=returnTol){
+    return {symbol:"=",label:"Estable",why:"retorno al nivel inicial tras una oscilación"};
+  }
+
+  // 1) Estabilidad por banda de referencia:
+  // si los 3 valores recientes permanecen dentro de sus VR y ocupan
+  // una fracción moderada de esos rangos, se describe como estable.
+  // El VR NO define normalidad de la tendencia; aquí sólo aporta una
+  // escala natural para juzgar si la oscilación es pequeña.
+  const refs=p.map(z=>z.ref);
+  if(refs.every(Boolean)){
+    const inside=p.every((z,i)=>z.value>=refs[i].lo && z.value<=refs[i].hi);
+    const widths=refs.map(r=>r.hi-r.lo).filter(w=>w>0);
+    const meanWidth=widths.length?widths.reduce((x,y)=>x+y,0)/widths.length:0;
+    if(inside && meanWidth>0 && amp<=0.35*meanWidth){
+      return {symbol:"=",label:"Estable",why:"oscilación reciente pequeña respecto de la banda de referencia"};
+    }
+  }
+
+  // 2) Meseta / igualdad práctica.
+  const closeAB=Math.abs(a-b)<=eps;
+  const closeBC=Math.abs(b-c)<=eps;
+  const closeAC=Math.abs(a-c)<=eps;
+  const pairPlateau=closeAB || closeBC || closeAC;
+  const thirdNear = mean===0 ? amp===0 : amp<=0.40*mean;
+  if(pairPlateau && thirdNear){
+    return {symbol:"=",label:"Estable",why:"meseta reciente"};
+  }
+
+  // 3) Oscilación relativa pequeña, incluso si está fuera del VR.
+  if(mean>0 && amp<=0.25*mean){
+    return {symbol:"=",label:"Estable",why:"oscilación reciente pequeña"};
+  }
+  if(mean===0 && amp===0){
+    return {symbol:"=",label:"Estable",why:"los tres valores recientes son iguales"};
+  }
+
+  // 4) Dirección sostenida: dos movimientos reales consecutivos.
+  if(d1>eps && d2>eps){
+    return {symbol:"↑",label:"Ascendente",why:"dos movimientos recientes consecutivos ascendentes"};
+  }
+  if(d1<-eps && d2<-eps){
+    return {symbol:"↓",label:"Descendente",why:"dos movimientos recientes consecutivos descendentes"};
+  }
+
+  return {symbol:"—",label:"Sin tendencia definida",why:"oscilación amplia sin dirección sostenida"};
+}
+function setPrintOrientation(count){
+  let el=document.getElementById("dynamicPageStyle");
+  if(!el){el=document.createElement("style");el.id="dynamicPageStyle";document.head.appendChild(el);}
+  el.textContent=count>=5?"@page{size:A4 landscape;margin:9mm 8mm 11mm}":"@page{size:A4 portrait;margin:10mm 9mm 12mm}";
+}
+
+function vfrBounds(ref){
+  if(!ref||!ref.text)return null;
+  const s=String(ref.text).replace(/,/g,".");
+  let m=s.match(/(-?\d+(?:\.\d+)?)\s*(?:-|–|—|a)\s*(-?\d+(?:\.\d+)?)/i);
+  if(m){
+    const lo=Number(m[1]),hi=Number(m[2]);
+    if(Number.isFinite(lo)&&Number.isFinite(hi)&&hi>=lo)return {lo,hi};
+  }
+  m=s.match(/(?:hasta|menor(?:\s+de)?|<)\s*=?\s*(-?\d+(?:\.\d+)?)/i);
+  if(m){const hi=Number(m[1]);if(Number.isFinite(hi))return {lo:-Infinity,hi};}
+  m=s.match(/(?:mayor(?:\s+de)?|>)\s*=?\s*(-?\d+(?:\.\d+)?)/i);
+  if(m){const lo=Number(m[1]);if(Number.isFinite(lo))return {lo,hi:Infinity};}
+  return null;
+}
+function isVFR(point){
+  if(!point)return false;
+  const v=numVal(point.x.value), b=vfrBounds(point.ref);
+  return v!==null && !!b && (v<b.lo || v>b.hi);
+}
+
+
+// V1.12.2 — filtro de relevancia temporal.
+// No elimina datos: decide únicamente qué series merecen ocupar espacio
+// en el informe longitudinal principal.
+function temporalRelevance(points, acceptedStudies){
+  if(!points?.length || !acceptedStudies?.length) return {show:false,reason:"sin datos"};
+
+  const ordered=[...acceptedStudies].sort((a,b)=>studyTime(a)-studyTime(b));
+  const studyIndex=new Map(ordered.map((s,i)=>[s,i]));
+  const idx=points.map(p=>studyIndex.get(p.s)).filter(i=>Number.isInteger(i)).sort((a,b)=>a-b);
+
+  if(!idx.length) return {show:false,reason:"sin estudios comparables"};
+
+  const n=idx.length;
+  const last=idx[idx.length-1];
+  const latest=ordered.length-1;
+
+  // Presencia en alguno de los dos estudios más recientes:
+  // incluso dos valores recientes pueden ser útiles aunque aún no definan tendencia.
+  const recent = last >= Math.max(0, latest-1);
+  if(recent) return {show:true,reason:"presencia reciente"};
+
+  // Una serie histórica suficientemente representativa conserva valor evolutivo
+  // aunque no llegue al último estudio.
+  if(n>=3) return {show:true,reason:"serie histórica representativa"};
+
+  // Uno o dos valores exclusivamente antiguos se conservan internamente,
+  // pero no ocupan el informe principal por defecto.
+  return {show:false,reason:"presencia escasa y antigua"};
+}
+
+
+const REPORT_GROUPS=[
+  {name:"Hemograma", params:new Set([
+    "Glóbulos rojos","Hematocrito","Hemoglobina","VCM","HCM","CHCM","RDW",
+    "Glóbulos blancos","Neutrófilos en cayado","Neutrófilos segmentados",
+    "Eosinófilos","Basófilos","Monocitos","Linfocitos","Plaquetas","Eritrosedimentación"
+  ])},
+  {name:"Glucemia y metabolismo", params:new Set([
+    "Glucemia","HbA1c","Sodio","Potasio","Ácido úrico","CPK"
+  ])},
+  {name:"Perfil lipídico", params:new Set([
+    "Colesterol total","HDL","LDL","Triglicéridos","Índice de Castelli","No-HDL",
+    "Lípidos totales","Pre-beta lipoproteínas","Beta lipoproteínas","Alfa lipoproteínas","Quilomicrones"
+  ])},
+  {name:"Función renal", params:new Set([
+    "Urea","Creatinina","IFGe","Microalbuminuria","Creatininuria","Relación albúmina/creatinina"
+  ])},
+  {name:"Función hepática", params:new Set([
+    "Bilirrubina directa","Bilirrubina indirecta","Bilirrubina total","Fosfatasa alcalina",
+    "TGP / ALT","TGO / AST","Proteínas totales","Albúmina"
+  ])},
+  {name:"Función tiroidea", params:new Set([
+    "TSH","T4 libre","T4 total","T3 total","T3 libre"
+  ])},
+  {name:"Orina", params:new Set([
+    "Color orina","Aspecto orina","Densidad orina","pH orina","Proteínas orina","Glucosa orina",
+    "Acetona orina","Cuerpos cetónicos (orina)","Bilirrubina (orina)","Pigmentos biliares",
+    "Urobilinógeno","Nitritos orina","Leucocitos esterasa","Eritrocitos bencidina",
+    "Células sedimento","Leucocitos sedimento","Hematíes sedimento","Otros elementos (orina)"
+  ])},
+  {name:"Vitaminas, inmunología y otros parámetros", params:new Set([
+    "Vitamina D","PSA","HBsAg","Hepatitis C Ac","VDRL","HIV"
+  ])}
+];
+function reportGroupFor(param){
+  for(const g of REPORT_GROUPS) if(g.params.has(param)) return g.name;
+  const f=fold(param||"");
+  if(/vitamina|ferritina|hierro|b12|folato|calcio|magnesio/.test(f)) return "Vitaminas, inmunología y otros parámetros";
+  if(/anticuerpo|anticuerpos|ana\b|anti-|complemento|inmuno|serolog|vdrl|hiv|hepatitis/.test(f)) return "Vitaminas, inmunología y otros parámetros";
+  return "Otros parámetros";
+}
+
+
+function reportPatientName(studies){
+  const withName=(studies||[]).find(s=>s.patient?.name && s.patient.name.trim());
+  return withName?.patient?.name?.trim() || "Paciente no identificado";
+}
+function reportPeriod(studies){
+  const ordered=[...(studies||[])].sort((a,b)=>studyTime(a)-studyTime(b));
+  if(!ordered.length) return "—";
+  const first=ordered[0]?.date || ordered[0]?.meta?.fechaEstudio || "—";
+  const last=ordered[ordered.length-1]?.date || ordered[ordered.length-1]?.meta?.fechaEstudio || "—";
+  return first===last ? first : `${first} – ${last}`;
+}
+
+function buildLongitudinal(sts){
+  const accepted=sts.filter(s=>!s.error&&!s.excluded&&!s.historicalAntecedent).sort((a,b)=>studyTime(a)-studyTime(b));
+  const host=$("longitudinal");
+  if(!host)return;
+  if(accepted.length<3){
+    const detail=sts.map(s=>`${s.file}: ${s.error?"error":s.excluded?"excluido":s.historicalAntecedent?"fuera de ventana":"incorporado"}`).join(" · ");
+    host.innerHTML=`<div class="card longitudinal"><div class="status warn"><b>Serie longitudinal:</b> se necesitan al menos 3 estudios incorporados y EvoLab reconoció ${accepted.length}.<div class="trendMeta" style="margin-top:6px">${esc(detail)}</div></div></div>`;
+    return;
+  }
+  setPrintOrientation(accepted.length);
+
+  // Add reference metadata to extracted items.
+  for(const s of accepted){
+    for(const x of (s.items||[])) if(!x.ref) x.ref=deriveReference(x);
+  }
+
+  // This test only compares studies that remain in the same laboratory block.
+  // Only a positively identified different laboratory should split a longitudinal series.
+  // "Laboratorio no identificado" is absence of evidence, not evidence of a different lab.
+  const knownLabs=accepted.filter(s=>s.lab && !/no identificado/i.test(s.lab));
+  const knownLabKeys=[...new Set(knownLabs.map(s=>s.labKey))];
+  if(knownLabKeys.length>1){
+    host.innerHTML=`<div class="card longitudinal"><div class="status warn"><b>No se calcula tendencia:</b> los estudios seleccionados contienen ${knownLabKeys.length} laboratorios positivamente identificados como diferentes. EvoLab no los mezcla automáticamente.</div></div>`;
+    return;
+  }
+  // If there is one known lab, inherit it only for grouping in studies whose lab was not identifiable.
+  // This does not rewrite the source metadata.
+  const effectiveLabKey=knownLabKeys[0] || "serie-seleccionada";
+
+  const byParam=new Map();
+  for(const s of accepted){
+    const onePerStudy=new Map();
+    for(const x of (s.items||[])){
+      if(!x.canon)continue;
+      const v=numVal(x.value);
+      if(v===null)continue;
+      // One visible cell = one vote in the trend calculation.
+      // Duplicate extractions from the same PDF must never fabricate a trend.
+      if(!onePerStudy.has(x.canon)){
+        onePerStudy.set(x.canon,{s,x,value:v,ref:x.ref});
+      }
+    }
+    for(const [canon,point] of onePerStudy){
+      if(!byParam.has(canon))byParam.set(canon,[]);
+      byParam.get(canon).push(point);
+    }
+  }
+
+  const rows=[];
+  for(const [param,pts0] of byParam){
+    const pts=pts0.sort((a,b)=>studyTime(a.s)-studyTime(b.s));
+    const relevance=temporalRelevance(pts,accepted);
+    if(!relevance.show) continue;
+    if(pts.length<2)continue;
+    const units=[...new Set(pts.map(z=>unitKey(z.x.unit)).filter(Boolean))];
+    const comparable=units.length<=1;
+    const tr=comparable?calcTrend(pts):{symbol:"—",label:"Sin tendencia definida",why:"unidades no comparables"};
+    rows.push({param,pts,tr});
+  }
+  const groupOrder=[
+    "Hemograma","Glucemia y metabolismo","Perfil lipídico","Función renal",
+    "Función hepática","Función tiroidea","Orina",
+    "Vitaminas, inmunología y otros parámetros","Otros parámetros"
+  ];
+  rows.sort((a,b)=>{
+    const ga=groupOrder.indexOf(reportGroupFor(a.param));
+    const gb=groupOrder.indexOf(reportGroupFor(b.param));
+    if(ga!==gb)return ga-gb;
+    return a.param.localeCompare(b.param,"es");
+  });
+
+  const dates=accepted.map(s=>s.date||"Sin fecha");
+  const patientName=reportPatientName(accepted);
+  const period=reportPeriod(accepted);
+  let h=`<div class="card longitudinal">
+    <div class="medicalReportHeader">
+      <div class="medicalBrand">EvoLab</div>
+      <div class="medicalTitle">Informe de Evolución Histórica de Laboratorio</div>
+      <div class="medicalMetaGrid">
+        <div><span>Paciente</span><b>${esc(patientName)}</b></div>
+        <div><span>Período analizado</span><b>${esc(period)}</b></div>
+        <div><span>Estudios incluidos</span><b>${accepted.length}</b></div>
+      </div>
+      <div class="medicalDatesLabel">Fechas de los estudios incluidos</div>
+      <div class="medicalDatesRow">
+        ${dates.map((d,i)=>`<span class="${i===dates.length-1?"currentDate":""}">${esc(d)}</span>`).join("")}
+      </div>
+      <div class="medicalLegend"><b>VFR:</b> Valor fuera de referencia. La tendencia describe la evolución del parámetro y no implica por sí misma normalidad o anormalidad.</div>
+    </div>
+    <div class="status ok"><b>${accepted.length} estudios incorporados.</b> Formato de impresión: A4 ${accepted.length>=5?"horizontal":"vertical"}.</div>
+    <div class="muted screenTrendNote" style="margin-bottom:6px">La flecha describe comportamiento histórico y termina en el último dato conocido. No es una proyección ni una valoración clínica.</div>
+    <table><thead>
+      <tr><th class="repeatReportHeader" colspan="${accepted.length+2}">
+        <div class="repeatMetaGrid">
+          <div><span>Paciente</span><b>${esc(patientName)}</b></div>
+          <div><span>Período analizado</span><b>${esc(period)}</b></div>
+          <div><span>Estudios incluidos</span><b>${accepted.length}</b></div>
+        </div>
+      </th></tr>
+      <tr><th>Parámetro</th>`;
+  dates.forEach((d,i)=>h+=`<th class="${i===accepted.length-1?"currentCol":""}">${esc(d)}</th>`);
+  h+=`<th>Tendencia</th></tr></thead>`;
+  let lastGroup="";
+  let groupOpen=false;
+  for(const r of rows){
+    const group=reportGroupFor(r.param);
+    if(group!==lastGroup){
+      if(groupOpen) h+=`</tbody>`;
+      h+=`<tbody class="reportGroup"><tr class="groupRow"><td colspan="${accepted.length+2}">${esc(group)}</td></tr>`;
+      groupOpen=true;
+      lastGroup=group;
+    }
+    h+=`<tr><td><b>${esc(r.param)}</b></td>`;
+    for(const s of accepted){
+      const z=r.pts.find(q=>q.s===s);
+      h+=`<td class="${s===accepted[accepted.length-1]?"currentCol":""}">${z?`<b>${esc(z.x.value)}</b>${z.x.unit?` ${esc(z.x.unit)}`:""}${isVFR(z)?` <span class="vfrTag">VFR</span>`:""}${z.ref?`<div class="trendMeta vrMeta">VR ${esc(z.ref.text)}</div>`:""}`:"—"}</td>`;
+    }
+    h+=`<td class="trendCell" title="${esc(r.tr.label+" · "+r.tr.why)}">${esc(r.tr.symbol)}<div class="trendMeta">${esc(r.tr.label)}</div>${r.tr.symbol==="—"?`<div class="trendMeta">${esc(r.tr.why)}</div>`:""}</td></tr>`;
+  }
+  if(groupOpen) h+=`</tbody>`;
+  h+=`</table>
+    <div class="status"><b>Relevancia temporal:</b> el informe principal prioriza parámetros con presencia reciente o con una serie histórica representativa. Uno o dos valores exclusivamente antiguos se conservan internamente, pero se omiten del informe principal.</div>
+<div class="status"><b>Regla utilizada:</b> se usan los <b>3 estudios comparables más recientes</b>. Primero se busca <b>retorno al nivel</b>, estabilidad por banda, meseta u oscilación relativa pequeña. El VR puede aportar escala, pero no determina la tendencia. <b>VFR es independiente de Tendencia:</b> indica dónde se encuentra el valor respecto del intervalo informado; la tendencia describe cómo se mueve. Sólo si no hay estabilidad se evalúan ↑ o ↓ mediante dos movimientos reales consecutivos.</div>
+    <div class="status warn"><b>Sin símbolo no significa ausencia.</b> “—” en Tendencia significa “Sin tendencia definida”: la serie no reúne todavía condiciones suficientes para clasificarla como estable, ascendente o descendente.</div>
+  </div>`;
+  host.innerHTML=h;
+}
+
+function render(sts){
+ const accepted=sts.filter(s=>!s.error&&!s.excluded);
+ const windowInfo=classifyEvolutionWindow(accepted,5);
+ const included=accepted.filter(s=>!s.historicalAntecedent);
+ const antecedents=accepted.filter(s=>s.historicalAntecedent);
+ const labs=new Map();
+ for(const s of included){if(!labs.has(s.labKey))labs.set(s.labKey,[]);labs.get(s.labKey).push(s);}
+
+ const excluded=sts.filter(s=>s.excluded);
+ const items=included.flatMap(s=>s.items||[]),norm=items.filter(x=>x.canon),unknown=items.filter(x=>!x.canon);
+ const covs=included.map(s=>s.cov.pct).filter(x=>x!==null),avg=covs.length?Math.round(covs.reduce((a,b)=>a+b,0)/covs.length):0;
+ $("metrics").classList.remove("hidden");$("out").classList.remove("hidden");
+ $("mf").textContent=sts.length;$("md").textContent=items.length;$("mn").textContent=norm.length;$("mu").textContent=unknown.length;$("mc").textContent=covs.length?avg+"%":"—";$("mx").textContent=excluded.length;
+ let principal=(included[0]||antecedents[0])?.patient||{name:"",doc:""};
+ let ghtml=`<div class="status ok"><b>Paciente principal:</b> ${esc(principal.name||"Identidad sin nombre")} ${principal.doc?`· DNI ${esc(principal.doc)}`:""} · ${included.length} estudio(s) en la evolución principal.</div>`;
+ if(windowInfo){
+   ghtml+=`<div class="status"><b>Ventana evolutiva principal:</b> últimos 5 años respecto del estudio más reciente (${esc(fmtDateObj(windowInfo.latest))}). ${antecedents.length?`${antecedents.length} estudio(s) anterior(es) quedan conservados como antecedentes históricos y no intervienen en la evolución principal.`:"No hay estudios anteriores fuera de la ventana."}</div>`;
+ }
+ if(labs.size>1) ghtml+=`<div class="status warn"><b>Se detectaron ${labs.size} laboratorios.</b> EvoLab los mantiene en períodos separados y no mezcla automáticamente sus series.</div>`;
+ for(const group of labs.values()){
+   const lab=group[0].lab||"Laboratorio no identificado";
+   ghtml+=`<div class="status"><b>${esc(lab)}</b> · ${group.length} estudio(s) · ${esc(group.map(s=>s.date||"sin fecha").join(" · "))}</div>`;
+ }
+ if(antecedents.length){
+   ghtml+=`<details><summary><b>Antecedentes históricos fuera de la ventana de 5 años (${antecedents.length})</b></summary><div style="padding:10px 0">`;
+   for(const s of antecedents){
+     ghtml+=`<div class="status"><b>${esc(s.date||"Fecha no identificada")}</b> · ${esc(s.lab||"Laboratorio no identificado")} · ${esc(s.file)}</div>`;
+   }
+   ghtml+=`</div></details>`;
+ }
+ const identityWarnings=included.filter(s=>s.identityWarning);
+ if(identityWarnings.length){
+   ghtml+=`<div class="status warn"><b>${identityWarnings.length} estudio(s) incorporado(s) requieren control de identidad.</b> La identidad no pudo confirmarse completamente en esos informes, pero no existe evidencia suficiente para clasificarlos como pacientes diferentes.</div>`;
+ }
+ if(excluded.length){
+   ghtml+=`<div class="status bad"><b>Se detectaron ${excluded.length} estudio(s) que no serán incorporados al informe.</b></div>`;
+   for(const x of excluded){
+     ghtml+=`<div class="status warn"><b>Estudio excluido: paciente diferente.</b> ${esc(x.file)}${x.patient?.name?` · ${esc(x.patient.name)}`:""}${x.patient?.doc?` · DNI ${esc(x.patient.doc)}`:""}<br><span class="muted">${esc(x.excludeReason||"")}</span></div>`;
+   }
+ }
+ if(covs.length)ghtml+=avg>=95?`<div class="status ok"><b>Cobertura media ${avg}%.</b> Sólo calculada sobre los estudios incorporados.</div>`:`<div class="status warn"><b>Cobertura media ${avg}%.</b> Sólo calculada sobre los estudios incorporados. Aún no se habilita “No incluye”.</div>`;
+ const semTot=included.reduce((a,s)=>{for(const k of Object.keys(a))a[k]+=(s.semantic?.[k]||0);return a},{metadato:0,contexto:0,referencia:0,resultado:0,observacion:0,candidato:0});
+ ghtml+=`<div class="status"><b>Control interno de lectura:</b> ${semTot.metadato} metadatos · ${semTot.contexto+semTot.referencia} líneas de contexto/referencia · ${semTot.resultado} líneas Resultado · ${semTot.observacion} observaciones · ${semTot.candidato} candidatos a determinación.</div>`;
+ $("global").innerHTML=ghtml;
+ let h="";
+ for(const s of sts){
+  h+=`<div class="study"><div class="studyhead">${esc(s.date||"Sin fecha")} · ${esc(s.file)} · protocolo ${esc(s.protocol||"—")} ${s.excluded?'<span class="tag bad">EXCLUIDO</span>':'<span class="tag ok">INCORPORADO</span>'}</div>`;
+  if(s.error){h+=`<div class="status bad">${esc(s.error)}</div></div>`;continue}
+  h+=`<div style="padding:8px 12px" class="muted">Paciente detectado: <b>${esc(s.patient?.name||"—")}</b>${s.patient?.doc?` · DNI ${esc(s.patient.doc)}`:""} · Laboratorio: <b>${esc(s.lab||"No identificado")}</b></div>`;
+  const m=s.meta||{};
+  const metaPairs=[
+    ["Fecha del estudio (Ingreso)",m.ingreso||m.fechaEstudio||s.date],
+    ["Fecha de emisión/disponibilidad (Generación)",m.generacion],
+    ["Protocolo",m.protocolo||s.protocol],
+    ["Nº de socio",m.numeroSocio],["Prescriptor",m.prescriptor],["Nº de orden",m.numeroOrden],
+    ["Servicio",m.servicio],["Sexo",m.sexo],["Edad",m.edad],["Muestra recibida",m.muestraRecibida],["Fecha de impresión",m.fechaImpresion]
+  ].filter(z=>z[1]);
+  if(metaPairs.length){
+    h+=`<div style="padding:0 12px 12px"><div class="status"><b>Datos del estudio</b><div style="display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:6px">`;
+    for(const [k,v] of metaPairs)h+=`<span><span class="muted">${esc(k)}:</span> <b>${esc(v)}</b></span>`;
+    h+=`</div></div></div>`;
+  }
+  if(s.excluded){h+=`<div class="status bad" style="margin:0 12px 12px"><b>No se incorpora al informe.</b> ${esc(s.excludeReason||"Paciente diferente.")}</div></div>`;continue}
+  if(s.identityWarning){
+    h+=`<div class="status warn" style="margin:0 12px 12px"><b>Control de identidad:</b> ${esc(s.identityWarning)}</div>`;
+  }
+  if(s.semantic){
+    const z=s.semantic;
+    h+=`<div class="status" style="margin:0 12px 12px"><b>Roles detectados:</b> ${z.metadato} metadatos · ${z.contexto+z.referencia} contexto/referencias · ${z.resultado} líneas Resultado · ${z.observacion} observaciones · ${z.candidato} candidatos.</div>`;
+  }
+  if(s.cov.pct!==null){
+   h+=`<div style="padding:10px 12px"><b>Cobertura del patrón: ${s.cov.pct}%</b> (${s.cov.hits.length}/${s.cov.g.length})<div class="cover" style="margin-top:5px"><div style="width:${s.cov.pct}%"></div></div>`;
+   if(s.cov.miss.length)h+=`<div class="status warn"><b>Faltan:</b> ${esc(s.cov.miss.join(" · "))}</div>`;
+   else h+=`<div class="status ok"><b>No faltan determinaciones del patrón conocido.</b></div>`;
+   h+=`</div>`;
+  }
+  const ctx=s.detContext||[];
+  if(ctx.length){
+    h+=`<div style="padding:0 12px 12px"><details><summary><b>Contexto de determinaciones detectado:</b> ${ctx.length} línea(s) de método, muestra o referencia retiradas del inventario</summary><table style="margin-top:8px"><thead><tr><th>Parámetro asociado</th><th>Tipo</th><th>Texto del laboratorio</th></tr></thead><tbody>`;
+    for(const c of ctx)h+=`<tr><td>${esc(c.parameter)}</td><td>${esc(c.type)}</td><td class="raw">${esc(c.text)}</td></tr>`;
+    h+=`</tbody></table></details></div>`;
+  }
+  h+=`<div style="padding:0 12px 12px"><table><thead><tr><th>Parámetro</th><th>Resultado</th><th>Unidad</th><th>Estado</th></tr></thead><tbody>`;
+  for(const x of s.items){
+   h+=`<tr><td><b>${esc(x.canon||x.name)}</b>${(!x.canon && x.name && x.name!==(x.canon||x.name))?`<div class="muted">${esc(x.name)}</div>`:""}</td><td><b>${esc(x.value)}</b></td><td>${esc(x.unit||"—")}</td><td>${x.canon?`<span class="tag ok">Reconocido</span>`:(x.unknownClass==="isolated"?`<span class="tag iso">Parámetro aislado</span>`:`<span class="tag warn">Revisar</span>`)}</td></tr>`;
+  }
+  h+=`</tbody></table></div></div>`;
+ }
+ $("studies").innerHTML=h;
+ buildLongitudinal(sts);
+}
+</script>
+</body></html>
