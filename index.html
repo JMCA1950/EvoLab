@@ -502,6 +502,9 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{border:1px solid 
 <div class="wrap">
 <div class="card">
 <h2 style="margin-top:0">Prueba técnica</h2>
+<details style="margin-bottom:18px">
+<summary style="cursor:pointer;font-weight:700;color:#315f69">⚙ Ver información técnica</summary>
+<div style="margin-top:14px">  
 <div class="status ok"><b>Motor validado:</b> el estudio patrón del 07/03/2026 alcanzó 41/41 determinaciones reconocidas (100% de cobertura). Esta pantalla vuelve a priorizar una lectura simple para el usuario.</div>
 <div class="status ok"><b>Objetivo:</b> construir automáticamente la tabla longitudinal con todos los estudios comparables seleccionados y calcular la columna <b>Tendencia</b>.</div>
 <div class="status"><b>Impresión:</b> hasta 3 estudios, A4 vertical; con 4 o más, A4 horizontal.</div>
@@ -509,6 +512,8 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{border:1px solid 
 <div class="status ok"><b>Principio de tendencia:</b> <i>La tendencia describe cómo se mueve el parámetro; el valor de referencia describe dónde se encuentra.</i> Se mantiene la lógica validada de estabilidad, meseta y retorno al nivel.</div>
 <div class="status"><b>Blindaje administrativo:</b> DNI, protocolo, número de orden, socio/afiliado y otros identificadores se excluyen antes de que puedan convertirse en resultados.</div>
 <div class="status ok"><b>Identidad V1.10.5:</b> <i>identidad no legible ≠ paciente diferente</i>. Un estudio sin nombre/DNI extraíbles se incorpora provisoriamente con aviso de control; solo una identidad fiable e incompatible provoca exclusión automática.</div>
+</div>
+</details>
 <div class="drop">
 Cargue uno o varios de los informes patrón.<br><br>
 <input id="files" type="file" accept="application/pdf" multiple>
