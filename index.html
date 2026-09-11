@@ -372,7 +372,19 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{border:1px solid 
   line-height:1.3;
   color:#435154;
 }
+.medicalPrintNote{
+  margin-top:8px;
+  font-size:11px;
+  line-height:1.3;
+  color:#435154;
+}  
 @media print{
+  #longitudinal .medicalPrintNote{
+  margin-top:1.8mm!important;
+  font-size:7.2pt!important;
+  line-height:1.2!important;
+  color:#333!important;
+}
   #longitudinal .medicalReportHeader{
     display:block!important;
     margin:0 0 3mm!important;
@@ -1780,6 +1792,7 @@ function buildLongitudinal(sts){
         <div><span>Paciente</span><b>${esc(patientName)}</b></div>
         <div><span>Período analizado</span><b>${esc(period)}</b></div>
         <div><span>Estudios incluidos</span><b>${accepted.length}</b></div>
+      <div class="medicalPrintNote">Informe longitudinal para facilitar la lectura de la evolución de resultados de laboratorio. No realiza diagnósticos ni reemplaza la valoración profesional.</div>
       </div>
       <div class="medicalDatesLabel">Fechas de los estudios incluidos</div>
       <div class="medicalDatesRow">
