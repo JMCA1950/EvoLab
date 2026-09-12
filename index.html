@@ -1768,7 +1768,7 @@ function buildLongitudinal(sts){
     host.innerHTML=`<div class="card longitudinal"><div class="status warn"><b>Serie longitudinal:</b> se necesitan al menos 3 estudios incorporados y EvoLab reconoció ${accepted.length}.<div class="trendMeta" style="margin-top:6px">${esc(detail)}</div></div></div>`;
     return;
   }
-  setPrintOrientation(accepted.length);
+  if(window.evoApplyPrintOrientation) window.evoApplyPrintOrientation();
 
   // Add reference metadata to extracted items.
   for(const s of accepted){
