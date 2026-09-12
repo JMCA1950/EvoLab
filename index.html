@@ -684,8 +684,8 @@ Seleccione los informes de laboratorio que desea comparar para analizar su evolu
       document.head.appendChild(style);
     }
     style.textContent = n>=5
-      ? "@page{size:A4 landscape;margin:9mm 8mm 13mm}"
-      : "@page{size:A4 portrait;margin:10mm 9mm 14mm}";
+      ? "@page{size:A4 landscape;margin:9mm 8mm 12mm}"
+      : "@page{size:A4 portrait;margin:10mm 9mm 13mm}";
   }
   window.addEventListener("beforeprint", applyPrintOrientation);
   document.addEventListener("DOMContentLoaded",function(){
