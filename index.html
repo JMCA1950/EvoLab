@@ -1652,7 +1652,17 @@ function calcTrend(points){
   }
 
   return {symbol:"—",label:"Sin tendencia definida",why:"oscilación amplia sin dirección sostenida"};
-
+function setPrintOrientation(count){
+  let el=document.getElementById("dynamicPageStyle");
+  if(!el){
+    el=document.createElement("style");
+    el.id="dynamicPageStyle";
+    document.head.appendChild(el);
+  }
+  el.textContent=count>=5
+    ? "@page{size:A4 landscape;margin:9mm 8mm 13mm}"
+    : "@page{size:A4 portrait;margin:10mm 9mm 14mm}";
+}
 function vfrBounds(ref){
   if(!ref||!ref.text)return null;
   const s=String(ref.text).replace(/,/g,".");
@@ -1768,7 +1778,7 @@ function buildLongitudinal(sts){
     host.innerHTML=`<div class="card longitudinal"><div class="status warn"><b>Serie longitudinal:</b> se necesitan al menos 3 estudios incorporados y EvoLab reconoció ${accepted.length}.<div class="trendMeta" style="margin-top:6px">${esc(detail)}</div></div></div>`;
     return;
   }
-  if(window.evoApplyPrintOrientation) window.evoApplyPrintOrientation();
+  setPrintOrientation(accepted.length);
 
   // Add reference metadata to extracted items.
   for(const s of accepted){
