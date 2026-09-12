@@ -1652,12 +1652,6 @@ function calcTrend(points){
   }
 
   return {symbol:"—",label:"Sin tendencia definida",why:"oscilación amplia sin dirección sostenida"};
-}
-function setPrintOrientation(count){
-  let el=document.getElementById("dynamicPageStyle");
-  if(!el){el=document.createElement("style");el.id="dynamicPageStyle";document.head.appendChild(el);}
-  el.textContent=count>=5?"@page{size:A4 landscape;margin:9mm 8mm 11mm}":"@page{size:A4 portrait;margin:10mm 9mm 12mm}";
-}
 
 function vfrBounds(ref){
   if(!ref||!ref.text)return null;
