@@ -1592,7 +1592,6 @@ function calcTrend(points){
   if(points.length<3){
     return {symbol:"—",label:"Sin tendencia definida",why:"menos de 3 estudios comparables"};
   }
-
   const p=points.slice(-3);
   const vals=p.map(z=>z.value);
   const a=vals[0], b=vals[1], c=vals[2];
@@ -1653,7 +1652,7 @@ function calcTrend(points){
 
   return {symbol:"—",label:"Sin tendencia definida",why:"oscilación amplia sin dirección sostenida"};
   }
-  {function setPrintOrientation(count){
+  function setPrintOrientation(count){
   let el=document.getElementById("dynamicPageStyle");
   if(!el){
     el=document.createElement("style");
