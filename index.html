@@ -590,6 +590,7 @@ Seleccione los informes de laboratorio que desea comparar para analizar su evolu
   <button id="printBtn" type="button">Imprimir / Guardar PDF</button>
   <button id="saveHistoryBtn" type="button" disabled>Guardar historial</button>
   <span id="saveHistoryStatus" class="muted"></span>
+  <div id="historyAvailable" class="status ok hidden" style="width:100%;margin-top:10px"></div>
 </div>
 </div>
 <div id="pb" class="hidden"><div class="progress"><div id="bar" class="bar"></div></div><div id="pt" class="muted" style="margin-top:6px"></div></div>
@@ -757,7 +758,29 @@ function loadEvoHistory(){
 function clearEvoHistory(){
   localStorage.removeItem(EVOLAB_HISTORY_KEY);
 }
+function showSavedHistoryInfo(){
+  const box = document.getElementById("historyAvailable");
+  if(!box) return;
 
+  const data = loadEvoHistory();
+  if(!data || !data.studies.length){
+    box.classList.add("hidden");
+    box.innerHTML = "";
+    return;
+  }
+
+  const ordered = [...data.studies].sort((a,b)=>{
+    const da = parseStudyDateValue(a)?.getTime() || 0;
+    const db = parseStudyDateValue(b)?.getTime() || 0;
+    return da - db;
+  });
+
+  const last = ordered[ordered.length - 1];
+  const lastDate = last?.date || last?.meta?.fechaEstudio || "fecha no identificada";
+
+  box.innerHTML = `<b>Historial disponible:</b> ${data.studies.length} estudio(s) guardado(s) en este dispositivo · último estudio: ${esc(lastDate)}.`;
+  box.classList.remove("hidden");
+}
 
 const saveHistoryBtn = document.getElementById("saveHistoryBtn");
 const saveHistoryStatus = document.getElementById("saveHistoryStatus");
@@ -818,6 +841,7 @@ if(copyAliasBtn){
 }
 
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+ showSavedHistoryInfo(); 
 const clean=s=>(s||"").replace(/\s+/g," ").trim();
 const fold=s=>clean(s).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
 
