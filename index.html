@@ -1646,12 +1646,32 @@ $("go").onclick=async()=>{
    s.items=extract(s);
    for(const x of s.items) if(!x.canon) x.unknownClass=classifyUnknownItem(x);
    s.cov=coverage(s);
- }
- $("bar").style.width="100%";
- $("pt").textContent="Análisis finalizado.";
- currentStudies = sts;
- render(sts);
- $("saveHistoryBtn").disabled = false;
+  }
+   $("bar").style.width="100%";
+
+if(addToHistoryMode){
+  currentStudies = [...baseHistoryStudies, ...sts];
+  render(currentStudies);
+
+  $("pt").textContent =
+    `Nuevo análisis incorporado. Total actual: ${currentStudies.length} estudio(s).`;
+
+  const historyBox = document.getElementById("historyAvailable");
+  if(historyBox){
+    historyBox.innerHTML =
+      `<b>Nuevo análisis incorporado:</b> ahora hay ${currentStudies.length} estudio(s). Revise el resultado y, si es correcto, presione “Guardar historial”.`;
+    historyBox.classList.remove("hidden");
+  }
+
+  addToHistoryMode = false;
+  baseHistoryStudies = [];
+}else{
+  $("pt").textContent="Análisis finalizado.";
+  currentStudies = sts;
+  render(currentStudies);
+}
+
+$("saveHistoryBtn").disabled = false;
 }
 
 function parseStudyDateValue(s){
