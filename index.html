@@ -1649,8 +1649,59 @@ $("go").onclick=async()=>{
   }
    $("bar").style.width="100%";
 
-if(addToHistoryMode){
-  currentStudies = [...baseHistoryStudies, ...sts];
+   if(addToHistoryMode){
+
+  const newStudies = [];
+
+  for(const nuevo of sts){
+    const nuevaFecha = (nuevo.date || nuevo.meta?.fechaEstudio || "").trim();
+    const nuevoDni = (nuevo.patient?.doc || "").replace(/\D/g,"");
+
+    const mismaFecha = baseHistoryStudies.filter(anterior=>{
+      const fechaAnterior =
+        (anterior.date || anterior.meta?.fechaEstudio || "").trim();
+      return nuevaFecha && fechaAnterior === nuevaFecha;
+    });
+
+    if(mismaFecha.length){
+
+      const mismoDni = mismaFecha.some(anterior=>{
+        const dniAnterior =
+          (anterior.patient?.doc || "").replace(/\D/g,"");
+        return nuevoDni && dniAnterior && nuevoDni === dniAnterior;
+      });
+
+      if(mismoDni){
+        alert(
+          `Este análisis no fue incorporado porque ya existe un estudio del mismo paciente con fecha ${nuevaFecha}.`
+        );
+        continue;
+      }
+
+      const dniDistinto = mismaFecha.some(anterior=>{
+        const dniAnterior =
+          (anterior.patient?.doc || "").replace(/\D/g,"");
+        return nuevoDni && dniAnterior && nuevoDni !== dniAnterior;
+      });
+
+      if(dniDistinto){
+        alert(
+          `El análisis con fecha ${nuevaFecha} tiene un DNI diferente al del historial y no será incorporado.`
+        );
+        continue;
+      }
+
+      const confirmar = confirm(
+        `Ya existe un estudio con fecha ${nuevaFecha}, pero EvoLab no pudo confirmar el DNI en ambos informes.\n\n¿Desea incorporarlo de todos modos?`
+      );
+
+      if(!confirmar) continue;
+    }
+
+    newStudies.push(nuevo);
+  }
+
+  currentStudies = [...baseHistoryStudies, ...newStudies];
   render(currentStudies);
 
   $("pt").textContent =
