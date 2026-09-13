@@ -588,7 +588,8 @@ Seleccione los informes de laboratorio que desea comparar para analizar su evolu
 <div style="margin-top:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
   <button id="go">Analizar estructura</button>
   <button id="printBtn" type="button">Imprimir / Guardar PDF</button>
-  
+  <button id="saveHistoryBtn" type="button" disabled>Guardar historial</button>
+  <span id="saveHistoryStatus" class="muted"></span>
 </div>
 </div>
 <div id="pb" class="hidden"><div class="progress"><div id="bar" class="bar"></div></div><div id="pt" class="muted" style="margin-top:6px"></div></div>
@@ -709,7 +710,7 @@ const CARDIOREGISTRO_URL = "https://jmca1950.github.io/CardioRepositorio/";
 const EVOLAB_SHARE_URL = "https://jmca1950.github.io/EvoLab/";
 const MERCADOPAGO_ALIAS = "jmcondomialcorta.mp";
 const EVOLAB_HISTORY_KEY = "evolab_history_v1";
-
+let currentStudies = [];
 function prepareHistoryForStorage(studies){
   return (studies || []).map(s => ({
     file: s.file || "",
@@ -756,6 +757,24 @@ function loadEvoHistory(){
 function clearEvoHistory(){
   localStorage.removeItem(EVOLAB_HISTORY_KEY);
 }
+function clearEvoHistory(){
+  localStorage.removeItem(EVOLAB_HISTORY_KEY);
+}
+
+const saveHistoryBtn = document.getElementById("saveHistoryBtn");
+const saveHistoryStatus = document.getElementById("saveHistoryStatus");
+
+if(saveHistoryBtn){
+  saveHistoryBtn.addEventListener("click",()=>{
+    if(!currentStudies.length) return;
+    const data = saveEvoHistory(currentStudies);
+    saveHistoryStatus.textContent =
+      `Historial guardado en este dispositivo: ${data.studies.length} estudio(s).`;
+    setTimeout(()=>{ saveHistoryStatus.textContent=""; },4000);
+  });
+}
+
+const cardioLink=document.getElementById("cardioLink");  
 const cardioLink=document.getElementById("cardioLink");
 if(cardioLink && CARDIOREGISTRO_URL){
   cardioLink.href=CARDIOREGISTRO_URL;
@@ -1556,7 +1575,11 @@ $("go").onclick=async()=>{
    for(const x of s.items) if(!x.canon) x.unknownClass=classifyUnknownItem(x);
    s.cov=coverage(s);
  }
- $("bar").style.width="100%";$("pt").textContent="Análisis finalizado.";render(sts);
+ $("bar").style.width="100%";
+ $("pt").textContent="Análisis finalizado.";
+ currentStudies = sts;
+ render(sts);
+ $("saveHistoryBtn").disabled = false;
 }
 
 function parseStudyDateValue(s){
