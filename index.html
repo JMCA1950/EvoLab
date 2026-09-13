@@ -714,6 +714,8 @@ const EVOLAB_SHARE_URL = "https://jmca1950.github.io/EvoLab/";
 const MERCADOPAGO_ALIAS = "jmcondomialcorta.mp";
 const EVOLAB_HISTORY_KEY = "evolab_history_v1";
 let currentStudies = [];
+let addToHistoryMode = false;
+let baseHistoryStudies = [];  
 function prepareHistoryForStorage(studies){
   return (studies || []).map(s => ({
     file: s.file || "",
@@ -816,7 +818,27 @@ if(useHistoryBtn){
       alert("No hay un historial guardado en este dispositivo.");
       return;
     }
+const addHistoryBtn = document.getElementById("addHistoryBtn");
 
+if(addHistoryBtn){
+  addHistoryBtn.addEventListener("click",()=>{
+    const data = loadEvoHistory();
+
+    if(!data || !data.studies.length){
+      alert("No hay un historial guardado. Cargue primero los estudios iniciales.");
+      return;
+    }
+
+    baseHistoryStudies = data.studies;
+    addToHistoryMode = true;
+
+    $("files").value = "";
+    $("pb").classList.remove("hidden");
+    $("bar").style.width = "0%";
+    $("pt").textContent =
+      `Historial preparado: ${baseHistoryStudies.length} estudio(s). Elija ahora el nuevo PDF y luego presione “Analizar estructura”.`;
+  });
+}
     currentStudies = data.studies;
     render(currentStudies);
 
