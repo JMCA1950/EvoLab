@@ -818,6 +818,18 @@ if(useHistoryBtn){
       alert("No hay un historial guardado en este dispositivo.");
       return;
     }
+
+    currentStudies = data.studies;
+    render(currentStudies);
+
+    $("saveHistoryBtn").disabled = false;
+    $("pb").classList.remove("hidden");
+    $("bar").style.width = "100%";
+    $("pt").textContent =
+      `Historial recuperado: ${currentStudies.length} estudio(s).`;
+  });
+}
+
 const addHistoryBtn = document.getElementById("addHistoryBtn");
 
 if(addHistoryBtn){
@@ -838,17 +850,7 @@ if(addHistoryBtn){
     $("pt").textContent =
       `Historial preparado: ${baseHistoryStudies.length} estudio(s). Elija ahora el nuevo PDF y luego presione “Analizar estructura”.`;
   });
-}
-    currentStudies = data.studies;
-    render(currentStudies);
-
-    $("saveHistoryBtn").disabled = false;
-    $("pb").classList.remove("hidden");
-    $("bar").style.width = "100%";
-    $("pt").textContent =
-      `Historial recuperado: ${currentStudies.length} estudio(s).`;
-  });
-}
+} 
 const shareValue=document.getElementById("shareValue");
 const copyShareBtn=document.getElementById("copyShareBtn");
 const shareStatus=document.getElementById("shareStatus");
