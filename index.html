@@ -849,6 +849,10 @@ if(addHistoryBtn){
     $("bar").style.width = "0%";
     $("pt").textContent =
       `Historial preparado: ${baseHistoryStudies.length} estudio(s). Elija ahora el nuevo PDF y luego presione “Analizar estructura”.`;
+    const historyBox = document.getElementById("historyAvailable");
+     historyBox.innerHTML =
+  `  <b>Historial preparado:</b> ${baseHistoryStudies.length} estudio(s). Elija ahora el nuevo PDF y luego presione “Analizar estructura”.`;
+    historyBox.classList.remove("hidden");
   });
 } 
 const shareValue=document.getElementById("shareValue");
