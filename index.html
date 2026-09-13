@@ -708,7 +708,54 @@ const $=x=>document.getElementById(x);
 const CARDIOREGISTRO_URL = "https://jmca1950.github.io/CardioRepositorio/";
 const EVOLAB_SHARE_URL = "https://jmca1950.github.io/EvoLab/";
 const MERCADOPAGO_ALIAS = "jmcondomialcorta.mp";
+const EVOLAB_HISTORY_KEY = "evolab_history_v1";
 
+function prepareHistoryForStorage(studies){
+  return (studies || []).map(s => ({
+    file: s.file || "",
+    protocol: s.protocol || "",
+    date: s.date || "",
+    patient: s.patient || {name:"",doc:""},
+    patientKey: s.patientKey || "",
+    meta: s.meta || {},
+    lab: s.lab || "",
+    labKey: s.labKey || "",
+    items: s.items || [],
+    cov: s.cov || {g:[],hits:[],miss:[],pct:null},
+    semantic: s.semantic || null,
+    detContext: s.detContext || [],
+    excluded: !!s.excluded,
+    excludeReason: s.excludeReason || "",
+    identityWarning: s.identityWarning || "",
+    historicalAntecedent: !!s.historicalAntecedent
+  }));
+}
+
+function saveEvoHistory(studies){
+  const data = {
+    version: 1,
+    savedAt: new Date().toISOString(),
+    studies: prepareHistoryForStorage(studies)
+  };
+  localStorage.setItem(EVOLAB_HISTORY_KEY, JSON.stringify(data));
+  return data;
+}
+
+function loadEvoHistory(){
+  try{
+    const raw = localStorage.getItem(EVOLAB_HISTORY_KEY);
+    if(!raw) return null;
+    const data = JSON.parse(raw);
+    if(!data || !Array.isArray(data.studies)) return null;
+    return data;
+  }catch(e){
+    return null;
+  }
+}
+
+function clearEvoHistory(){
+  localStorage.removeItem(EVOLAB_HISTORY_KEY);
+}
 const cardioLink=document.getElementById("cardioLink");
 if(cardioLink && CARDIOREGISTRO_URL){
   cardioLink.href=CARDIOREGISTRO_URL;
