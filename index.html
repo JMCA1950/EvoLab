@@ -589,6 +589,7 @@ Seleccione los informes de laboratorio que desea comparar para analizar su evolu
   <button id="go">Analizar estructura</button>
   <button id="printBtn" type="button">Imprimir / Guardar PDF</button>
   <button id="saveHistoryBtn" type="button" disabled>Guardar historial</button>
+  <button id="useHistoryBtn" type="button">Usar historial</button>
   <span id="saveHistoryStatus" class="muted"></span>
   <div id="historyAvailable" class="status ok hidden" style="width:100%;margin-top:10px"></div>
 </div>
@@ -804,7 +805,27 @@ if(cardioLink && CARDIOREGISTRO_URL){
   cardioLink.target="_blank";
   cardioLink.rel="noopener";
 }
+const useHistoryBtn = document.getElementById("useHistoryBtn");
 
+if(useHistoryBtn){
+  useHistoryBtn.addEventListener("click",()=>{
+    const data = loadEvoHistory();
+
+    if(!data || !data.studies.length){
+      alert("No hay un historial guardado en este dispositivo.");
+      return;
+    }
+
+    currentStudies = data.studies;
+    render(currentStudies);
+
+    $("saveHistoryBtn").disabled = false;
+    $("pb").classList.remove("hidden");
+    $("bar").style.width = "100%";
+    $("pt").textContent =
+      `Historial recuperado: ${currentStudies.length} estudio(s).`;
+  });
+}
 const shareValue=document.getElementById("shareValue");
 const copyShareBtn=document.getElementById("copyShareBtn");
 const shareStatus=document.getElementById("shareStatus");
