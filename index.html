@@ -921,11 +921,13 @@ if(manageHistoryBtn){
       return;
     }
 
-    const ordered = [...data.studies].sort((a,b)=>{
-      const da = parseStudyDateValue(a)?.getTime() || 0;
-      const db = parseStudyDateValue(b)?.getTime() || 0;
-      return db - da;
-    });
+    const ordered = data.studies
+  .map((study,index)=>({study,index}))
+  .sort((a,b)=>{
+    const da = parseStudyDateValue(a.study)?.getTime() || 0;
+    const db = parseStudyDateValue(b.study)?.getTime() || 0;
+    return db - da;
+  });
 
     let html = `
       <div class="status">
@@ -943,7 +945,9 @@ if(manageHistoryBtn){
             <tbody>
     `;
 
-    for(const s of ordered){
+    for(const entry of ordered){
+      const s = entry.study;
+      const originalIndex = entry.index;
       const fechaRaw = s.date || s.meta?.fechaEstudio || "Fecha no identificada";
       const fecha = fechaRaw.match(/\d{2}\/\d{2}\/\d{4}/)?.[0] || fechaRaw;
       const laboratorio = s.lab || "Laboratorio no identificado";
@@ -957,7 +961,8 @@ html += `
       <button type="button"
         class="deleteStudyBtn"
         data-file="${esc(archivo)}"
-        data-date="${esc(fechaRaw)}">
+        data-date="${esc(fechaRaw)}"
+         data-index="${originalIndex}">
         Eliminar
       </button>
     </td>
@@ -979,7 +984,7 @@ html += `
   btn.addEventListener("click",()=>{
     const archivo = btn.dataset.file;
     const fecha = btn.dataset.date;
-
+    const index = Number(btn.dataset.index);
     const confirmar = confirm(
       `¿Eliminar este estudio del historial?\n\n` +
       `${fecha} — ${archivo}\n\n` +
@@ -992,12 +997,9 @@ html += `
     const data = loadEvoHistory();
     if(!data || !data.studies.length) return;
 
-    data.studies = data.studies.filter(s=>{
-      const sArchivo = s.file || "Archivo no identificado";
-      const sFecha = s.date || s.meta?.fechaEstudio || "Fecha no identificada";
-
-      return !(sArchivo === archivo && sFecha === fecha);
-    });
+    if(Number.isInteger(index) && index >= 0 && index < data.studies.length){
+  data.studies.splice(index,1);
+}
 
     localStorage.setItem(EVOLAB_HISTORY_KEY, JSON.stringify(data));
 
