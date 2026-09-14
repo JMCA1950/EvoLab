@@ -2394,7 +2394,9 @@ ghtml+=`<div class="status"><b>${esc(lab)}</b> · ${group.length} estudio(s) · 
       if(files.includes(s.file)){
         s.lab=labManual;
         s.labKey=labKey(labManual);
-
+      if(s.all){
+  saveLabHint(s.all,labManual);
+}
         if(s.meta){
           s.meta.laboratorio=labManual;
         }
