@@ -1159,6 +1159,7 @@ function identityRelation(a,b){
 
 function parseLab(all){
  const x=all.replace(/\r/g,"");
+ if(/FUNDACION\s+INSTITUTO\s+QUIRURGICO\s+DEL\s+CALLAO|INSTITUTO\s+QUIRURGICO\s+DEL\s+CALLAO|\bIQDC\b/i.test(x)) return "Instituto Quirúrgico del Callao"; 
  if(/Ladislao Martinez 43 Martinez/i.test(x)) return "Laboratorio Martínez";
  if(/ProgBA-CEMIC|RIQAS|UNITY|MALBRAN/i.test(x)) return "Laboratorio CEMIC / formato histórico";
  let m=x.match(/(?:Laboratorio|LABORATORIO)\s*:?\s*([^\n]{3,70})/i);
