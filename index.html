@@ -595,6 +595,7 @@ Seleccione los informes de laboratorio que desea comparar para analizar su evolu
   <button id="manageHistoryBtn" type="button">Administrar historial</button>
   <span id="saveHistoryStatus" class="muted"></span>
   <div id="historyAvailable" class="status ok hidden" style="width:100%;margin-top:10px"></div>
+  <div id="historyManager" class="hidden" style="width:100%;margin-top:10px"></div>
 </div>
 </div>
 <div id="pb" class="hidden"><div class="progress"><div id="bar" class="bar"></div></div><div id="pt" class="muted" style="margin-top:6px"></div></div>
@@ -894,6 +895,68 @@ if(newHistoryBtn){
       "Historial borrado. Puede cargar nuevos análisis cuando lo desee.";
   });
 } 
+const manageHistoryBtn = document.getElementById("manageHistoryBtn");
+
+if(manageHistoryBtn){
+  manageHistoryBtn.addEventListener("click",()=>{
+    const box = document.getElementById("historyManager");
+    const data = loadEvoHistory();
+
+    if(!box) return;
+
+    if(!data || !data.studies.length){
+      box.innerHTML =
+        `<div class="status">No hay estudios guardados para administrar.</div>`;
+      box.classList.remove("hidden");
+      return;
+    }
+
+    const ordered = [...data.studies].sort((a,b)=>{
+      const da = parseStudyDateValue(a)?.getTime() || 0;
+      const db = parseStudyDateValue(b)?.getTime() || 0;
+      return db - da;
+    });
+
+    let html = `
+      <div class="status">
+        <b>Historial guardado: ${ordered.length} estudio(s)</b>
+        <div style="margin-top:8px">
+          <table>
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Laboratorio</th>
+                <th>Archivo</th>
+              </tr>
+            </thead>
+            <tbody>
+    `;
+
+    for(const s of ordered){
+      const fecha = s.date || s.meta?.fechaEstudio || "Fecha no identificada";
+      const laboratorio = s.lab || "Laboratorio no identificado";
+      const archivo = s.file || "Archivo no identificado";
+
+      html += `
+        <tr>
+          <td>${esc(fecha)}</td>
+          <td>${esc(laboratorio)}</td>
+          <td>${esc(archivo)}</td>
+        </tr>
+      `;
+    }
+
+    html += `
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+
+    box.innerHTML = html;
+    box.classList.remove("hidden");
+  });
+}
 const shareValue=document.getElementById("shareValue");
 const copyShareBtn=document.getElementById("copyShareBtn");
 const shareStatus=document.getElementById("shareStatus");
