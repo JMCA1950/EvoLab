@@ -855,6 +855,43 @@ if(addHistoryBtn){
   `  <b>Historial preparado:</b> ${baseHistoryStudies.length} estudio(s). Elija ahora el nuevo PDF y luego presione “Analizar estructura”.`;
     historyBox.classList.remove("hidden");
   });
+}
+ const newHistoryBtn = document.getElementById("newHistoryBtn");
+
+if(newHistoryBtn){
+  newHistoryBtn.addEventListener("click",()=>{
+    const confirmar = confirm(
+      "¿Borrar el historial guardado?\n\n" +
+      "Se eliminarán de EvoLab los análisis guardados en este dispositivo.\n" +
+      "Los archivos PDF originales no serán afectados.\n\n" +
+      "Esta acción no se puede deshacer."
+    );
+
+    if(!confirmar) return;
+
+    clearEvoHistory();
+
+    currentStudies = [];
+    baseHistoryStudies = [];
+    addToHistoryMode = false;
+
+    const historyBox = document.getElementById("historyAvailable");
+    if(historyBox){
+      historyBox.innerHTML = "";
+      historyBox.classList.add("hidden");
+    }
+
+    $("saveHistoryBtn").disabled = true;
+
+    $("metrics").classList.add("hidden");
+    $("out").classList.add("hidden");
+
+    $("files").value = "";
+    $("pb").classList.remove("hidden");
+    $("bar").style.width = "0%";
+    $("pt").textContent =
+      "Historial borrado. Puede cargar nuevos análisis cuando lo desee.";
+  });
 } 
 const shareValue=document.getElementById("shareValue");
 const copyShareBtn=document.getElementById("copyShareBtn");
