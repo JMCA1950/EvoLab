@@ -944,7 +944,8 @@ if(manageHistoryBtn){
     `;
 
     for(const s of ordered){
-      const fecha = s.date || s.meta?.fechaEstudio || "Fecha no identificada";
+      const fechaRaw = s.date || s.meta?.fechaEstudio || "Fecha no identificada";
+      const fecha = fechaRaw.match(/\d{2}\/\d{2}\/\d{4}/)?.[0] || fechaRaw;
       const laboratorio = s.lab || "Laboratorio no identificado";
       const archivo = s.file || "Archivo no identificado";
 html += `
@@ -956,7 +957,7 @@ html += `
       <button type="button"
         class="deleteStudyBtn"
         data-file="${esc(archivo)}"
-        data-date="${esc(fecha)}">
+        data-date="${esc(fechaRaw)}">
         Eliminar
       </button>
     </td>
