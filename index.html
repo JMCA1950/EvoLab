@@ -1716,7 +1716,6 @@ $("go").onclick=async()=>{
   $("bar").style.width=`${Math.round(i/fs.length*100)}%`;$("pt").textContent=`Analizando ${i+1}/${fs.length}: ${fs[i].name}`;
   try{
    const p=await rowsFromPdf(fs[i]);
-   alert(p.all.slice(0,1200));
    let st={file:fs[i].name,...p};
    st.protocol=parseProtocol(p.all);
    st.date=parseDate(p.all);
