@@ -726,6 +726,57 @@ const CARDIOREGISTRO_URL = "https://jmca1950.github.io/CardioRepositorio/";
 const EVOLAB_SHARE_URL = "https://jmca1950.github.io/EvoLab/";
 const MERCADOPAGO_ALIAS = "jmcondomialcorta.mp";
 const EVOLAB_HISTORY_KEY = "evolab_history_v1";
+const EVOLAB_LAB_HINTS_KEY = "evolab_lab_hints_v1";
+function labTemplateKey(all){
+  const f = fold(all || "");
+
+  const labels = [
+    ["paciente", /\bpaciente\b/],
+    ["dni", /\bdni\b/],
+    ["sexo", /\bsexo\b/],
+    ["edad", /\bedad\b/],
+    ["protocolo", /\bprotocolo\b/],
+    ["fechaorden", /fecha orden/],
+    ["prescriptor", /\bprescriptor\b/],
+    ["norden", /n\s*orden|numero de orden/],
+    ["resultado", /\bresultado\b/],
+    ["unidades", /\bunidades\b/],
+    ["valref", /val de ref|valor de referencia/],
+    ["usuarioimp", /usuario impresion/],
+    ["fechaimp", /fecha impresion/]
+  ];
+
+  const found = labels
+    .filter(([_,re]) => re.test(f))
+    .map(([key]) => key);
+
+  return found.length >= 6 ? found.join("|") : "";
+}
+
+function loadLabHints(){
+  try{
+    return JSON.parse(localStorage.getItem(EVOLAB_LAB_HINTS_KEY) || "{}");
+  }catch(e){
+    return {};
+  }
+}
+
+function saveLabHint(all,lab){
+  const key = labTemplateKey(all);
+  if(!key || !lab) return;
+
+  const hints = loadLabHints();
+  hints[key] = lab;
+  localStorage.setItem(EVOLAB_LAB_HINTS_KEY, JSON.stringify(hints));
+}
+
+function getLabHint(all){
+  const key = labTemplateKey(all);
+  if(!key) return "";
+
+  const hints = loadLabHints();
+  return hints[key] || "";
+}
 let currentStudies = [];
 let addToHistoryMode = false;
 let baseHistoryStudies = [];  
