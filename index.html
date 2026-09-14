@@ -2291,8 +2291,10 @@ function render(sts){
  if(labs.size>1) ghtml+=`<div class="status warn"><b>Se detectaron ${labs.size} laboratorios.</b> EvoLab los mantiene en períodos separados y no mezcla automáticamente sus series.</div>`;
  for(const group of labs.values()){
    const lab=group[0].lab||"Laboratorio no identificado";
-   const identifyLabBtn = lab === "Laboratorio no identificado"
-  ? ` <button type="button" class="identifyLabBtn">Identificar laboratorio</button>`
+   const groupFiles = JSON.stringify(group.map(s=>s.file));
+
+const identifyLabBtn = lab === "Laboratorio no identificado"
+  ? ` <button type="button" class="identifyLabBtn" data-files="${esc(groupFiles)}">Identificar laboratorio</button>`
   : "";
 
 ghtml+=`<div class="status"><b>${esc(lab)}</b> · ${group.length} estudio(s) · ${esc(group.map(s=>s.date||"sin fecha").join(" · "))}${identifyLabBtn}</div>`;
@@ -2318,6 +2320,41 @@ ghtml+=`<div class="status"><b>${esc(lab)}</b> · ${group.length} estudio(s) · 
  const semTot=included.reduce((a,s)=>{for(const k of Object.keys(a))a[k]+=(s.semantic?.[k]||0);return a},{metadato:0,contexto:0,referencia:0,resultado:0,observacion:0,candidato:0});
  ghtml+=`<div class="status"><b>Control interno de lectura:</b> ${semTot.metadato} metadatos · ${semTot.contexto+semTot.referencia} líneas de contexto/referencia · ${semTot.resultado} líneas Resultado · ${semTot.observacion} observaciones · ${semTot.candidato} candidatos a determinación.</div>`;
  $("global").innerHTML=ghtml;
+ $("global").querySelectorAll(".identifyLabBtn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    let files=[];
+
+    try{
+      files=JSON.parse(btn.dataset.files || "[]");
+    }catch(e){
+      files=[];
+    }
+
+    const nombre=prompt(
+      "El nombre del laboratorio no pudo obtenerse automáticamente del PDF.\n\n" +
+      "Ingrese el nombre del laboratorio:"
+    );
+
+    if(!nombre || !nombre.trim()) return;
+
+    const labManual=nombre.trim();
+
+    for(const s of sts){
+      if(files.includes(s.file)){
+        s.lab=labManual;
+        s.labKey=labKey(labManual);
+
+        if(s.meta){
+          s.meta.laboratorio=labManual;
+        }
+      }
+    }
+
+    currentStudies=sts;
+    render(sts);
+    $("saveHistoryBtn").disabled=false;
+  });
+}); 
  let h="";
  for(const s of sts){
   h+=`<div class="study"><div class="studyhead">${esc(s.date||"Sin fecha")} · ${esc(s.file)} · protocolo ${esc(s.protocol||"—")} ${s.excluded?'<span class="tag bad">EXCLUIDO</span>':'<span class="tag ok">INCORPORADO</span>'}</div>`;
