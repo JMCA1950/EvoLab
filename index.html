@@ -1773,9 +1773,25 @@ $("go").onclick=async()=>{
    st.patient=parsePatient(p.all);
    st.patientKey=patientKey(st.patient);
    st.meta=extractMetadata(p.all);
-   st.date=st.meta.fechaEstudio||st.date;
-   st.lab=st.meta.laboratorio||parseLab(p.all);
-   st.labKey=labKey(st.lab);
+st.date=st.meta.fechaEstudio||st.date;
+st.lab=st.meta.laboratorio||parseLab(p.all);
+
+if(st.lab==="Laboratorio no identificado"){
+  const sugerido=getLabHint(p.all);
+
+  if(sugerido){
+    const usar=confirm(
+      `Este estudio parece corresponder a:\n\n${sugerido}\n\n¿Desea usar esta identificación?`
+    );
+
+    if(usar){
+      st.lab=sugerido;
+      st.meta.laboratorio=sugerido;
+    }
+  }
+}
+
+st.labKey=labKey(st.lab);
    st.items=[];
    st.cov={g:[],hits:[],miss:[],pct:null};
    sts.push(st);
