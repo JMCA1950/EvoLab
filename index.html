@@ -47,7 +47,14 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{border:1px solid 
 .medicalMode .longitudinal .status{font-size:10px}
 @media print{#studies,#metrics,.drop,#pb{display:none!important}.longitudinal{margin-top:0}.longitudinal .status{display:none!important}.longitudinal table{font-size:8.8pt}}
 
-.appHero{background:linear-gradient(120deg,var(--a),var(--a2));color:#fff;border-radius:0 0 22px 22px}
+.appHero{
+  max-width:1220px;
+  margin:10px auto 0;
+  background:linear-gradient(105deg,var(--a) 0%,var(--a2) 58%,#d9eeee 100%);
+  color:#fff;
+  border-radius:22px;
+  overflow:hidden;
+}
 .heroGrid{display:grid;grid-template-columns:1.15fr .95fr;gap:28px;align-items:center}
 .brandLine{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 .brandLine h1{font-size:40px;letter-spacing:-1px}
