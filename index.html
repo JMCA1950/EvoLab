@@ -937,6 +937,7 @@ if(manageHistoryBtn){
                 <th>Fecha</th>
                 <th>Laboratorio</th>
                 <th>Archivo</th>
+                <th>Eliminar</th>
               </tr>
             </thead>
             <tbody>
@@ -946,14 +947,22 @@ if(manageHistoryBtn){
       const fecha = s.date || s.meta?.fechaEstudio || "Fecha no identificada";
       const laboratorio = s.lab || "Laboratorio no identificado";
       const archivo = s.file || "Archivo no identificado";
-
-      html += `
-        <tr>
-          <td>${esc(fecha)}</td>
-          <td>${esc(laboratorio)}</td>
-          <td>${esc(archivo)}</td>
-        </tr>
-      `;
+html += `
+  <tr>
+    <td>${esc(fecha)}</td>
+    <td>${esc(laboratorio)}</td>
+    <td>${esc(archivo)}</td>
+    <td>
+      <button type="button"
+        class="deleteStudyBtn"
+        data-file="${esc(archivo)}"
+        data-date="${esc(fecha)}">
+        Eliminar
+      </button>
+    </td>
+  </tr>
+`;
+     
     }
 
     html += `
@@ -965,6 +974,36 @@ if(manageHistoryBtn){
 
     box.innerHTML = html;
     box.classList.remove("hidden");
+    box.querySelectorAll(".deleteStudyBtn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const archivo = btn.dataset.file;
+    const fecha = btn.dataset.date;
+
+    const confirmar = confirm(
+      `¿Eliminar este estudio del historial?\n\n` +
+      `${fecha} — ${archivo}\n\n` +
+      `Esta acción no se puede deshacer.\n` +
+      `Los archivos PDF originales no serán afectados.`
+    );
+
+    if(!confirmar) return;
+
+    const data = loadEvoHistory();
+    if(!data || !data.studies.length) return;
+
+    data.studies = data.studies.filter(s=>{
+      const sArchivo = s.file || "Archivo no identificado";
+      const sFecha = s.date || s.meta?.fechaEstudio || "Fecha no identificada";
+
+      return !(sArchivo === archivo && sFecha === fecha);
+    });
+
+    localStorage.setItem(EVOLAB_HISTORY_KEY, JSON.stringify(data));
+
+    showSavedHistoryInfo();
+    manageHistoryBtn.click();
+  });
+});
   });
 }
 const shareValue=document.getElementById("shareValue");
