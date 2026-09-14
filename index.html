@@ -2291,7 +2291,11 @@ function render(sts){
  if(labs.size>1) ghtml+=`<div class="status warn"><b>Se detectaron ${labs.size} laboratorios.</b> EvoLab los mantiene en períodos separados y no mezcla automáticamente sus series.</div>`;
  for(const group of labs.values()){
    const lab=group[0].lab||"Laboratorio no identificado";
-   ghtml+=`<div class="status"><b>${esc(lab)}</b> · ${group.length} estudio(s) · ${esc(group.map(s=>s.date||"sin fecha").join(" · "))}</div>`;
+   const identifyLabBtn = lab === "Laboratorio no identificado"
+  ? ` <button type="button" class="identifyLabBtn">Identificar laboratorio</button>`
+  : "";
+
+ghtml+=`<div class="status"><b>${esc(lab)}</b> · ${group.length} estudio(s) · ${esc(group.map(s=>s.date||"sin fecha").join(" · "))}${identifyLabBtn}</div>`;
  }
  if(antecedents.length){
    ghtml+=`<details><summary><b>Antecedentes históricos fuera de la ventana de 5 años (${antecedents.length})</b></summary><div style="padding:10px 0">`;
