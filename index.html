@@ -1635,7 +1635,7 @@ function extract(st){
 
  // Dedicated structural parser for the erythrocyte series.
  extractErythrocyteSeries(st,out);
-
+ extractLeukocytes(st,out);
  // Strategy A: visual rows. Supports one or several name:value pairs on same line.
  for(const r of rows){
   if(r.blocked)continue;
