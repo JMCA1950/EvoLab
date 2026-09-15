@@ -1749,7 +1749,7 @@ function extract(st){
 
    if(!v && (qual.test(tx)||semi.test(tx))) v=tx;
    if(v){
-     add(out,{name:heading,value:v,unit:u,source:rows[i].text+" → "+tx,strategy:"bloque"});
+   add(out,{name:heading,value:v,unit:u,source:rows[i].text+" → "+tx+" | canon="+canon+" | heading="+heading,strategy:"bloque"});  
      break;
    }
   }
