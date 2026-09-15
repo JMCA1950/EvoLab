@@ -1805,16 +1805,7 @@ function extract(st){
 
  // Final structural rescue for known analytes split across consecutive PDF text lines.
  extractSequentialKnownAnalytes(st,out);
- alert(
-  out
-    .filter(x => canonical(x.name)==="Aspecto orina")
-    .map(x =>
-      `Aspecto orina = ${x.value} ${x.unit || ""}\n` +
-      `estrategia: ${x.strategy}\n` +
-      `fuente: ${x.source}`
-    )
-    .join("\n\n")
-);
+ 
  // This specifically prevents pediatric/adult reference limits from becoming
  // false measurements (e.g. creatinine 0.40 from "0.40 a 0.85 mg/dl").
  const adminIds=new Set();
