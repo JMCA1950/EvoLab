@@ -1687,7 +1687,7 @@ function extract(st){
   // Any later "Prematuros:", "Zona gris:", etc. belongs to reference/context and is not re-parsed.
   const nmPrimary=normalizeAnalyteLabel(clean(t.split(/(?=(?:<|>)?\s*-?\d+(?:[.,]\d+)?)/)[0]));
   const canonPrimary=canonical(nmPrimary);
-  if(canonPrimary==="HbA1c") continue;
+  if(["HbA1c","T3 total","T3 libre","T4 total","T4 libre"].includes(canonPrimary)) continue;
   let consumedPrimary=false;
   if(canonPrimary){
     const rest=t.slice(t.indexOf(nmPrimary)+nmPrimary.length);
