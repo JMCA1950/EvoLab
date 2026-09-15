@@ -1561,7 +1561,47 @@ function extractErythrocyteSeries(st,out){
    });
  }
 }
+function extractLeukocytes(st,out){
+  const lines=(st.all||"").split(/\n+/).map(clean).filter(Boolean);
+  const f=lines.map(fold);
 
+  for(let i=0;i<lines.length;i++){
+    if(f[i] !== "leucocitos") continue;
+
+    let value="", unit="", source=[lines[i]];
+
+    for(let j=i+1;j<=Math.min(i+4,lines.length-1);j++){
+      const s=lines[j];
+      source.push(s);
+
+      if(!value){
+        const m=s.match(/^(?:<|>)?\s*-?\d+(?:[.,]\d+)?\s*$/);
+        if(m){
+          value=m[0].trim();
+          continue;
+        }
+      }
+
+      if(value && !unit){
+        const um=s.match(units);
+        if(um){
+          unit=um[0];
+          break;
+        }
+      }
+    }
+
+    if(value){
+      add(out,{
+        name:"Leucocitos",
+        value,
+        unit,
+        source:source.join(" → "),
+        strategy:"rescate leucocitos"
+      });
+    }
+  }
+}
 function extractSequentialKnownAnalytes(st,out){
  const lines=(st.all||"").split(/\n+/).map(clean).filter(Boolean);
  for(let i=0;i<lines.length;i++){
