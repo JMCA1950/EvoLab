@@ -1535,7 +1535,7 @@ function extractErythrocyteSeries(st,out){
    const heading=normalizeAnalyteLabel(lines[i]);
    const canon=canonical(heading);
    if(!canon || !wanted.has(canon))continue;
-
+   
    let j=i+1;
    // Laboratory method markers such as "(1)", "(2)", "(3)", "(4)" are metadata,
    // not part of the analyte name and not a result.
@@ -1717,7 +1717,7 @@ function extract(st){
   const heading=stripHeaderName(rows[i].text);
   const canon=canonical(heading);
   if(!canon)continue;
-
+  if(["HbA1c","T3 total","T3 libre","T4 total","T4 libre"].includes(canon)) continue;
   for(let j=i;j<=Math.min(i+6,rows.length-1);j++){
    if(rows[j].p!==rows[i].p)break;
 
