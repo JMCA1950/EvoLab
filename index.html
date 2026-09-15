@@ -2200,6 +2200,10 @@ function reportPeriod(studies){
 }
 
 function buildLongitudinal(sts){
+  alert(sts.map(s =>
+  `${s.date} | ${s.file}\n` +
+  `error=${!!s.error} | excluded=${!!s.excluded} | historical=${!!s.historicalAntecedent}`
+).join("\n\n"));
   const accepted=sts.filter(s=>!s.error&&!s.excluded&&!s.historicalAntecedent).sort((a,b)=>studyTime(a)-studyTime(b));
   const host=$("longitudinal");
   if(!host)return;
