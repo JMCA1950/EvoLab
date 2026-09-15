@@ -1798,9 +1798,9 @@ function extract(st){
  extractSequentialKnownAnalytes(st,out);
  alert(
   out
-    .filter(x => ["T3 total","T4 total"].includes(x.canon))
+    .filter(x => ["T3 total","T4 total"].includes(canonical(x.name)))
     .map(x =>
-      `${x.canon} = ${x.value} ${x.unit || ""}\n` +
+    `${canonical(x.name)} = ${x.value} ${x.unit || ""}\n` +  
       `estrategia: ${x.strategy}\n` +
       `fuente: ${x.source}`
     )
