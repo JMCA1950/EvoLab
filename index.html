@@ -2220,11 +2220,7 @@ function buildLongitudinal(sts){
   // "Laboratorio no identificado" is absence of evidence, not evidence of a different lab.
   const knownLabs=accepted.filter(s=>s.lab && !/no identificado/i.test(s.lab));
   const knownLabKeys=[...new Set(knownLabs.map(s=>s.labKey))];
-  if(knownLabKeys.length>1){
-    host.innerHTML=`<div class="card longitudinal"><div class="status warn"><b>No se calcula tendencia:</b> los estudios seleccionados contienen ${knownLabKeys.length} laboratorios positivamente identificados como diferentes. EvoLab no los mezcla automáticamente.</div></div>`;
-    return;
-  }
-  // If there is one known lab, inherit it only for grouping in studies whose lab was not identifiable.
+   // If there is one known lab, inherit it only for grouping in studies whose lab was not identifiable.
   // This does not rewrite the source metadata.
   const effectiveLabKey=knownLabKeys[0] || "serie-seleccionada";
 
