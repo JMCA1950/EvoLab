@@ -1742,7 +1742,7 @@ function extract(st){
      const beforeHead=stripHeaderName(before);
      const beforeCanon=canonical(beforeHead);
      if(!beforeCanon || beforeCanon===canon || /^resultado\b/i.test(before)){
-       v=numericVal(before);
+       v=numericVal(beforeCanon===canon ? before.slice(beforeHead.length) : before);
        u=um[0];
      }
    }
