@@ -1653,13 +1653,22 @@ function extractLeukocytes(st,out){
    // Structural rescue only: next non-empty line must begin with a numeric result,
    // and the following nearby lines should contain a compatible unit.
    let value="",unit="",source=[lines[i]];
-   for(let j=i+1;j<=Math.min(i+4,lines.length-1);j++){
+   if(canon==="Aspecto orina" && lines[i+1] && /^(ligeramente turbio|límpido|limpido|turbio|claro)$/i.test(lines[i+1])){
+  value=lines[i+1];
+  source.push(lines[i+1]);
+}
+     if(canon==="Aspecto orina" && value){
+  add(out,{name:heading,value,unit:"",source:source.join(" → "),strategy:"rescate estructural"});
+  continue;
+}
+     for(let j=i+1;j<=Math.min(i+4,lines.length-1);j++){
      const s=lines[j];
      source.push(s);
      if(!value){
        const m=s.match(/^(?:<|>)?\s*-?\d+(?:[.,]\d+)?\s*$/);
        if(m){value=m[0].trim();continue}
      }
+      
      if(value && !unit){
        const um=s.match(units);
        if(um){unit=um[0];break}
