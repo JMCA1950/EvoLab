@@ -2346,7 +2346,7 @@ function buildLongitudinal(sts){
 let tr;
 if(qualitative){
   const vals=pts.map(z=>fold(String(z.value||"")));
-  const recent=vals.slice(-3);
+  const recent=vals.slice(-2);
   const same=recent.length>=2 && recent.every(v=>v===recent[0]);
 
   tr=same
