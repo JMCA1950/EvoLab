@@ -2321,11 +2321,12 @@ function buildLongitudinal(sts){
     for(const x of (s.items||[])){
       if(!x.canon)continue;
       const v=numVal(x.value);
-      if(v===null)continue;
+      const isQualitative = v===null && ["Aspecto orina","Color orina"].includes(x.canon);
+      if(v===null && !isQualitative)continue;
       // One visible cell = one vote in the trend calculation.
       // Duplicate extractions from the same PDF must never fabricate a trend.
       if(!onePerStudy.has(x.canon)){
-        onePerStudy.set(x.canon,{s,x,value:v,ref:x.ref});
+      onePerStudy.set(x.canon,{s,x,value:isQualitative ? String(x.value).trim() : v,ref:x.ref,qualitative:isQualitative});  
       }
     }
     for(const [canon,point] of onePerStudy){
@@ -2340,9 +2341,24 @@ function buildLongitudinal(sts){
     const relevance=temporalRelevance(pts,accepted);
     if(!relevance.show) continue;
     if(pts.length<2)continue;
-    const units=[...new Set(pts.map(z=>unitKey(z.x.unit)).filter(Boolean))];
-    const comparable=units.length<=1;
-    const tr=comparable?calcTrend(pts):{symbol:"—",label:"Sin tendencia definida",why:"unidades no comparables"};
+    const qualitative=pts.some(z=>z.qualitative);
+
+let tr;
+if(qualitative){
+  const vals=pts.map(z=>fold(String(z.value||"")));
+  const recent=vals.slice(-3);
+  const same=recent.length>=2 && recent.every(v=>v===recent[0]);
+
+  tr=same
+    ? {symbol:"=",label:"Estable",why:"resultado cualitativo sin cambios recientes"}
+    : {symbol:"—",label:"Sin tendencia definida",why:"resultado cualitativo variable"};
+}else{
+  const units=[...new Set(pts.map(z=>unitKey(z.x.unit)).filter(Boolean))];
+  const comparable=units.length<=1;
+  tr=comparable
+    ? calcTrend(pts)
+    : {symbol:"—",label:"Sin tendencia definida",why:"unidades no comparables"};
+}
     rows.push({param,pts,tr});
   }
   const groupOrder=[
