@@ -606,6 +606,88 @@ Seleccione los informes de laboratorio que desea comparar para analizar su evolu
   <div style="width:100%;text-align:center;margin-top:2px">
   <button id="helpMenuBtn" type="button">? Ayuda</button>
 </div>
+  <div id="menuHelp" class="hidden" style="
+  width:100%;
+  margin-top:14px;
+  padding:18px;
+  box-sizing:border-box;
+  background:#ffffff;
+  border:1px solid #d8e0e3;
+  border-radius:12px;
+  box-shadow:0 4px 14px rgba(0,0,0,.08);
+">
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+    <h3 style="margin:0;">Ayuda del menú</h3>
+    <button id="closeMenuHelpX" type="button" title="Cerrar ayuda">×</button>
+  </div>
+
+  <p style="margin-top:0;">
+    Esta guía explica para qué sirve cada función y cuándo conviene utilizarla.
+  </p>
+
+  <div style="overflow-x:auto;">
+    <table style="width:100%;border-collapse:collapse;">
+      <thead>
+        <tr>
+          <th style="text-align:left;padding:9px;">Función</th>
+          <th style="text-align:left;padding:9px;">¿Para qué sirve?</th>
+          <th style="text-align:left;padding:9px;">¿Cuándo usarlo?</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr>
+          <td style="padding:9px;"><strong>Analizar estructura</strong></td>
+          <td style="padding:9px;">Lee los estudios seleccionados, identifica los análisis disponibles y organiza la información para mostrar su evolución.</td>
+          <td style="padding:9px;">Después de seleccionar uno o más archivos de estudios de laboratorio.</td>
+        </tr>
+
+        <tr>
+          <td style="padding:9px;"><strong>Imprimir / Guardar PDF</strong></td>
+          <td style="padding:9px;">Genera el informe con la información actualmente mostrada para imprimirlo o guardarlo como PDF.</td>
+          <td style="padding:9px;">Cuando hayas terminado de revisar los resultados y quieras conservarlos o llevarlos a una consulta médica.</td>
+        </tr>
+
+        <tr>
+          <td style="padding:9px;"><strong>Guardar historial</strong></td>
+          <td style="padding:9px;">Guarda en este dispositivo los estudios que acabás de incorporar al análisis.</td>
+          <td style="padding:9px;">Cuando quieras conservar esos estudios para compararlos posteriormente con nuevos análisis.</td>
+        </tr>
+
+        <tr>
+          <td style="padding:9px;"><strong>Usar historial</strong></td>
+          <td style="padding:9px;">Recupera los estudios previamente guardados en este dispositivo y los incorpora al análisis actual.</td>
+          <td style="padding:9px;">Cuando quieras consultar tu evolución sin tener que volver a seleccionar los archivos originales.</td>
+        </tr>
+
+        <tr>
+          <td style="padding:9px;"><strong>Agregar nuevo análisis</strong></td>
+          <td style="padding:9px;">Permite incorporar un nuevo estudio a los que ya estás utilizando.</td>
+          <td style="padding:9px;">Cuando recibas un análisis más reciente y quieras compararlo con los anteriores.</td>
+        </tr>
+
+        <tr>
+          <td style="padding:9px;"><strong>Borrar historial</strong></td>
+          <td style="padding:9px;">Elimina del dispositivo el historial de estudios guardados por EvoLab.</td>
+          <td style="padding:9px;">Cuando quieras comenzar un historial nuevo o dejar de conservar esos estudios en el dispositivo.</td>
+        </tr>
+
+        <tr>
+          <td style="padding:9px;"><strong>Administrar historial</strong></td>
+          <td style="padding:9px;">Permite revisar y gestionar individualmente los estudios que forman el historial guardado.</td>
+          <td style="padding:9px;">Cuando necesites comprobar qué estudios están almacenados o eliminar alguno en particular.</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div style="text-align:center;margin-top:14px;">
+    <button id="closeMenuHelpBtn" type="button">Cerrar</button>
+  </div>
+
+</div>
   <span id="saveHistoryStatus" class="muted"></span>
   <div id="historyAvailable" class="status ok hidden" style="width:100%;margin-top:10px"></div>
   <div id="historyManager" class="hidden" style="width:100%;margin-top:10px"></div>
