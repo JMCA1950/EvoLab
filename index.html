@@ -46,7 +46,13 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{border:1px solid 
 .medicalMode .longitudinal h2{font-size:22px}
 .medicalMode .longitudinal .status{font-size:10px}
 @media print{#studies,#metrics,.drop,#pb{display:none!important}.longitudinal{margin-top:0}.longitudinal .status{display:none!important}.longitudinal table{font-size:8.8pt}}
-
+@media print{
+  .longitudinal .methodologyPrint{
+    display:block!important;
+    font-size:8pt;
+    margin-top:6px;
+  }
+}
 .appHero{
   max-width:1220px;
   margin:10px auto 0;
@@ -2568,7 +2574,7 @@ if(qualitative){
     <div class="status"><b>Relevancia temporal:</b> el informe principal prioriza parámetros con presencia reciente o con una serie histórica representativa. Uno o dos valores exclusivamente antiguos se conservan internamente, pero se omiten del informe principal.</div>
 <div class="status"><b>Regla utilizada:</b> se usan los <b>3 estudios comparables más recientes</b>. Primero se busca <b>retorno al nivel</b>, estabilidad por banda, meseta u oscilación relativa pequeña. El VR puede aportar escala, pero no determina la tendencia. <b>VFR es independiente de Tendencia:</b> indica dónde se encuentra el valor respecto del intervalo informado; la tendencia describe cómo se mueve. Sólo si no hay estabilidad se evalúan ↑ o ↓ mediante dos movimientos reales consecutivos.</div>
     <div class="status warn"><b>Sin símbolo no significa ausencia.</b> “—” en Tendencia significa “Sin tendencia definida”: la serie no reúne todavía condiciones suficientes para clasificarla como estable, ascendente o descendente.</div>
- <div class="status"><b>Transparencia metodológica:</b> A solicitud del profesional médico, puede enviarse por correo electrónico un documento con los criterios y reglas utilizados por EvoLab para determinar las tendencias.</div> 
+ <div class="status methodologyPrint"><b>Transparencia metodológica:</b> A solicitud del profesional médico, puede enviarse por correo electrónico un documento con los criterios y reglas utilizados por EvoLab para determinar las tendencias.</div> 
   </div>`;
   host.innerHTML=h;
 }
