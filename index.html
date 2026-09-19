@@ -2259,7 +2259,13 @@ function calcTrend(points){
   const mean=Math.abs((a+b+c)/3);
   const amp=Math.max(...vals)-Math.min(...vals);
   const eps=Math.max(mean*0.03, 1e-9);
-
+  // 4) Dirección sostenida: dos movimientos reales consecutivos.
+if(d1>eps && d2>eps){
+  return {symbol:"↑",label:"Ascendente",why:"dos movimientos recientes consecutivos ascendentes"};
+}
+if(d1<-eps && d2<-eps){
+  return {symbol:"↓",label:"Descendente",why:"dos movimientos recientes consecutivos descendentes"};
+}
   // 0) Retorno al nivel: si el tercer valor vuelve al nivel del primero,
   // el movimiento intermedio es una oscilación, no una dirección.
   // Ejemplo: 0.2 → 0.3 → 0.2 = Estable.
