@@ -568,7 +568,7 @@ table{width:100%;border-collapse:collapse;font-size:11px}th,td{border:1px solid 
 <body class="medicalMode">
 <header class="appHero screenOnly"><div class="wrap heroGrid">
   <div>
-    <div class="brandLine"><h1>EvoLab</h1><div class="heroVersion">V1.13.6</div></div>
+    <div class="brandLine"><h1>EvoLab</h1><div class="heroVersion">V1.14</div></div>
     
     <div class="heroPurpose">Evolución histórica de resultados de laboratorio</div>
     <div class="heroCredit">Desarrollado por José María Condomí Alcorta y Data (ChatGPT)</div>
@@ -605,8 +605,10 @@ Seleccione los informes de laboratorio que desea comparar para analizar su evolu
   <button id="addHistoryBtn" type="button">Agregar nuevo análisis</button>
   <button id="newHistoryBtn" type="button">Borrar historial</button>
   <button id="manageHistoryBtn" type="button">Administrar historial</button>
-  <div style="width:100%;text-align:center;margin-top:2px">
+<div style="width:100%;text-align:center;margin-top:2px">
   <button id="helpMenuBtn" type="button">? Ayuda</button>
+  <button id="installBtn" type="button">📲 Instalar EvoLab</button>
+</div>  
 </div>
   <div id="menuHelp" class="hidden" style="
   width:100%;
@@ -785,7 +787,7 @@ Seleccione los informes de laboratorio que desea comparar para analizar su evolu
 
 <footer class="appFooter screenOnly">
   <div><b>EvoLab</b> · Evolución histórica de laboratorio</div>
-  <div>José María Condomí Alcorta y Data (ChatGPT) · V1.13.6</div>
+  <div>José María Condomí Alcorta y Data (ChatGPT) · V1.14</div>
 </footer>
 
 
@@ -2728,4 +2730,55 @@ if ('serviceWorker' in navigator) {
   });
 }
 </script>
+<script>
+let evoLabInstallPrompt = null;
+
+window.addEventListener('beforeinstallprompt', event => {
+  event.preventDefault();
+  evoLabInstallPrompt = event;
+});
+
+window.addEventListener('appinstalled', () => {
+  evoLabInstallPrompt = null;
+});
+
+document.getElementById('installBtn').addEventListener('click', async () => {
+  const alreadyInstalled =
+    window.matchMedia('(display-mode: standalone)').matches ||
+    window.navigator.standalone === true;
+
+  if (alreadyInstalled) {
+    alert('EvoLab ya está instalada en este dispositivo.');
+    return;
+  }
+
+  if (evoLabInstallPrompt) {
+    const prompt = evoLabInstallPrompt;
+    evoLabInstallPrompt = null;
+    await prompt.prompt();
+    return;
+  }
+
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+  if (isIOS) {
+    alert(
+      'Para instalar EvoLab en iPhone o iPad:\n\n' +
+      '1. Abra EvoLab en Safari.\n' +
+      '2. Pulse Compartir.\n' +
+      '3. Seleccione Agregar a pantalla de inicio.\n' +
+      '4. Confirme con Agregar.'
+    );
+  } else {
+    alert(
+      'Para instalar EvoLab:\n\n' +
+      'En Chrome para Android: abra el menú de tres puntos y seleccione ' +
+      'Instalar aplicación o Agregar a pantalla principal.\n\n' +
+      'En Chrome para computadora: busque Instalar EvoLab en el menú del navegador.\n\n' +
+      'En Microsoft Edge: menú de tres puntos → Aplicaciones → Instalar EvoLab.\n\n' +
+      'Si no aparece la opción, compruebe si EvoLab ya está instalada.'
+    );
+  }
+});
+</script>  
 </body></html>
