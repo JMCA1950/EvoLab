@@ -9,6 +9,14 @@
 :root{--a:#315f69;--a2:#3f7884;--bg:#edf1f2;--line:#d7e0e2;--ok:#e7f3ea;--warn:#fff3d9;--bad:#fde8e8;--txt:#202a30;--muted:#69767c}
 *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--txt)}
 header{background:var(--a);color:#fff}.wrap{max-width:1220px;margin:auto;padding:18px}h1{margin:0;font-size:25px}.sub{margin-top:4px;opacity:.9}
+/* V1.14.1 — Ancho cómodo de lectura en pantallas grandes */
+@media screen and (min-width: 1400px) {
+  .wrap,
+  .appHero,
+  .appFooter {
+    max-width: 1100px;
+  }
+}  
 .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0}.drop{border:2px dashed #a4b6bc;border-radius:10px;padding:22px;text-align:center;background:#fbfcfc}
 button{background:var(--a);color:#fff;border:0;border-radius:8px;padding:9px 14px;font-weight:700;cursor:pointer}
 .hidden{display:none}.muted{font-size:11px;color:var(--muted)}.status{padding:9px 11px;border-radius:8px;margin:8px 0;font-size:12px}
