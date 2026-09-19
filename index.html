@@ -2718,4 +2718,14 @@ ghtml+=`<div class="status"><b>${esc(lab)}</b> · ${group.length} estudio(s) · 
  buildLongitudinal(sts);
 }
 </script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js')
+      .catch(err => {
+        console.warn('No se pudo registrar el modo instalable de EvoLab:', err);
+      });
+  });
+}
+</script>
 </body></html>
